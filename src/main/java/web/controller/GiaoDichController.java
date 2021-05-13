@@ -25,7 +25,7 @@ public class GiaoDichController {
 
     @GetMapping
     public String getAll(Model model){
-        String url = "http://localhost:8080/giaodich";
+        String url = "https://htttqlt5-server.herokuapp.com/giaodich";
         List<GiaoDich> giaoDichs = Arrays.asList(rest.getForObject(url, GiaoDich[].class));
         model.addAttribute("list", giaoDichs);
         return "khach-hang/giao-dich/list";
@@ -33,7 +33,7 @@ public class GiaoDichController {
 
     @GetMapping("/{customer}")
     public String getCustomerHistory(@PathVariable("customer") int id,Model model){
-        String url = "http://localhost:8080/giaodich";
+        String url = "https://htttqlt5-server.herokuapp.com/giaodich";
         List<GiaoDich> giaoDichs = Arrays.asList(rest.getForObject(url, GiaoDich[].class));
         model.addAttribute("list", giaoDichs);
         return "khach-hang/giao-dich/list";
@@ -47,7 +47,7 @@ public class GiaoDichController {
     }
     @PostMapping("/add")
     public String save(GiaoDich giaoDich){
-        String url = "http://localhost:8080/giaodich";   
+        String url = "https://htttqlt5-server.herokuapp.com/giaodich";
         rest.postForObject(url, giaoDich, Void.class);
         return "redirect:/quan-ly/giao-dich";
 

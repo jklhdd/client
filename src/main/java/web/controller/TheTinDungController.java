@@ -38,7 +38,7 @@ public class TheTinDungController {
     
     @GetMapping
     public String getAll(Model model){
-        String url = "http://localhost:8080/credit-card";
+        String url = "https://htttqlt5-server.herokuapp.com/credit-card";
         List<TheTinDung> theTinDungs = Arrays.asList(rest.getForObject(url, TheTinDung[].class));
         model.addAttribute("list", theTinDungs);
         return "nhan-vien-tin-dung/the-tin-dung/list";
@@ -46,7 +46,7 @@ public class TheTinDungController {
 
     @GetMapping("/edit/{id}")
     public String getById(@PathVariable("id") int id,Model model){
-        String url = "http://localhost:8080/credit-card/detail/" + id;
+        String url = "https://htttqlt5-server.herokuapp.com/credit-card/detail/" + id;
         TheTinDung theTinDung = rest.getForObject(url, TheTinDung.class);
         model.addAttribute("model", theTinDung);
         return "nhan-vien-tin-dung/the-tin-dung/edit";
@@ -54,7 +54,7 @@ public class TheTinDungController {
 
     @GetMapping("/{taikhoan_id}")
     public String getByCustomerId(@PathVariable("taikhoan_id") int id,Model model){
-        String url = "http://localhost:8080/credit-card/" + id;
+        String url = "https://htttqlt5-server.herokuapp.com/credit-card/" + id;
         TheTinDung theTinDung = rest.getForObject(url, TheTinDung.class);
         model.addAttribute("model", theTinDung);
         return "nhan-vien-tin-dung/the-tin-dung/edit";
@@ -62,14 +62,14 @@ public class TheTinDungController {
 
     @PutMapping("/approve/{id}")
     public String update(@PathVariable("id") int id){
-        String url = "http://localhost:8080/credit-card/approve/"+id;
+        String url = "https://htttqlt5-server.herokuapp.com/credit-card/approve/"+id;
         rest.put(url, Void.class);
         return "nhan-vien-tin-dung/the-tin-dung/list";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable ("id") int id) {
-        rest.delete("http://localhost:8080/atm-card/{id}",id);
+        rest.delete("https://htttqlt5-server.herokuapp.com/atm-card/{id}",id);
         return "nhan-vien-tin-dung/the-tin-dung/list";
     }
 
@@ -81,14 +81,14 @@ public class TheTinDungController {
     }
     @PostMapping("/add")
     public String save(TheTinDung ttd){
-        String url = "http://localhost:8080/credit-card";   
+        String url = "https://htttqlt5-server.herokuapp.com/credit-card";
         rest.postForObject(url, ttd, Void.class);
         return "redirect:/nhan-vien-tin-dung/the-tin-dung";
     }
 
     @PostMapping("/tra-no")
     public String traNo(GiaoDichDto dto){
-        String url = "http://localhost:8080/credit-card";   
+        String url = "https://htttqlt5-server.herokuapp.com/credit-card";
         rest.postForObject(url, dto, String.class);
         return "redirect:/nhan-vien-tin-dung/the-tin-dung";
     }

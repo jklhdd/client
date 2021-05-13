@@ -33,6 +33,7 @@ import web.ultis.SqlDateEditor;
 @RequestMapping(path = "/quan-ly/chi-tieu", produces = "application/json")
 public class ChiTieuController {
 	private RestTemplate rest = new RestTemplate();
+	String url = "https://htttqlt5-server.herokuapp.com/spend";
 
 	@InitBinder
 	public void initBinder(final WebDataBinder binder) {
@@ -41,7 +42,6 @@ public class ChiTieuController {
 
 	@GetMapping
 	public String getAll(Model model) {
-		String url = "http://localhost:8080/spend";
 		List<ChiTieu> chitieus = Arrays.asList(rest.getForObject(url, ChiTieu[].class));
 		model.addAttribute("list", chitieus);
 		return "quan-ly/chi-tieu/list";
@@ -49,7 +49,7 @@ public class ChiTieuController {
 
 	@GetMapping("/edit/{id}")
 	public String detail(@PathVariable("id") int id, Model model) {
-		String url = "http://localhost:8080/spend/" + id;
+		url = url + id;
 		ChiTieu chitieu = rest.getForObject(url, ChiTieu.class);
 		model.addAttribute("model", chitieu);
 		return "quan-ly/chi-tieu/edit";
@@ -64,7 +64,6 @@ public class ChiTieuController {
 
 	@PostMapping("/add")
 	public String save(ChiTieu chitieu) {
-		String url = "http://localhost:8080/spend";
 		rest.postForObject(url, chitieu, Void.class);
 		return "redirect:/quan-ly/chi-tieu";
 	}

@@ -35,7 +35,7 @@ public class DoanhSoController {
 
     @GetMapping
     public String getAll(Model model){
-        String url = "http://localhost:8080/sale";
+        String url = "https://htttqlt5-server.herokuapp.com/sale";
         List<DoanhSo> doanhSos = Arrays.asList(rest.getForObject(url, DoanhSo[].class));
         model.addAttribute("list", doanhSos);
         return "quan-ly/doanh-so/list";
@@ -43,7 +43,7 @@ public class DoanhSoController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") int id,Model model){
-        String url = "http://localhost:8080/sale/" + id;
+        String url = "https://htttqlt5-server.herokuapp.com/sale/" + id;
         DoanhSo doanhSo = rest.getForObject(url, DoanhSo.class);
         model.addAttribute("model", doanhSo);
         return "quan-ly/doanh-so/edit";
@@ -59,7 +59,7 @@ public class DoanhSoController {
 
     @PostMapping("/add")
     public String save(@RequestBody DoanhSo ds){
-        String url = "http://localhost:8080/sale";
+        String url = "https://htttqlt5-server.herokuapp.com/sale";
         rest.postForObject(url, ds, Void.class);
         return "redirect:/quan-ly/doanh-so";
     }

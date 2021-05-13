@@ -49,14 +49,14 @@ public class VayController {
     @GetMapping
     public String getAll(Model model){
 	List<Vay> vays = Arrays
-				.asList(rest.getForObject("http://localhost:8080/loan", Vay[].class));
+				.asList(rest.getForObject("https://htttqlt5-server.herokuapp.com/loan", Vay[].class));
 		model.addAttribute("list",vays);
         return "nhan-vien-tin-dung/vay/list.html";
     }
 
     @GetMapping("/{taikhoan_id}")
     public String getAllByCustomerId(@PathVariable("taikhoan_id") int id, Model model){
-	Vay vay = rest.getForObject("http://localhost:8080/loan/"+id, Vay.class);
+	Vay vay = rest.getForObject("https://htttqlt5-server.herokuapp.com/loan/"+id, Vay.class);
 	model.addAttribute("model",vay);
         return "nhan-vien-tin-dung/vay/edit.html";
     }
@@ -70,13 +70,13 @@ public class VayController {
 
     @PostMapping("/add")
     public String save(Vay vay){
-       	rest.postForObject("http://localhost:8080/loan", vay, Vay.class);
+       	rest.postForObject("https://htttqlt5-server.herokuapp.com/loan", vay, Vay.class);
 	return "nhan-vien-tin-dung/vay/list.html";
     }
 
     @PostMapping("/tra-no")
     public String traNo(GiaoDichDto dto){
-        String url = "http://localhost:8080/loan/tra-no";   
+        String url = "https://htttqlt5-server.herokuapp.com/loan/tra-no";
         rest.postForObject(url, dto, String.class);
         return "nhan-vien-tin-dung/vay/list.html";
     }

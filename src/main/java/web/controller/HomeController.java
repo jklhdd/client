@@ -39,7 +39,7 @@ public class HomeController {
 	@PostMapping("/login")
 	public String login(@RequestParam("taikhoan") String tk, @RequestParam("matkhau") String mk,
 			HttpServletRequest request) {
-		String url = "http://localhost:8080/account/login/" + tk + "/" + mk;
+		String url = "https://htttqlt5-server.herokuapp.com/account/login/" + tk + "/" + mk;
 		ThanhVien thanhVien = rest.getForObject(url, ThanhVien.class);
 		if (thanhVien == null) {
 			return "login";
@@ -57,7 +57,7 @@ public class HomeController {
 	}
 	@PostMapping("/create/{pass}")
 	public String create(@PathVariable("pass") String mk, @RequestBody ThanhVien tv) {
-		String url = "http://localhost:8080/account/create/" + mk;
+		String url = "https://htttqlt5-server.herokuapp.com/account/create/" + mk;
 		rest.postForObject(url, tv, ThanhVien.class);
 		return "login";
 	}
