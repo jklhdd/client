@@ -46,11 +46,6 @@
               <li class="breadcrumb-item active">Giao dịch</li>
             </ol>
           </div>
-        </div>
-        <div class="row mt-3">
-          <a href="/khach-hang/giao-dich/add" class="btn btn-app bg-danger">
-            <i class="fas fa-plus"></i> Thêm mới
-          </a>
         </div> 
       </div><!-- /.container-fluid -->
     </section>
@@ -74,7 +69,7 @@
                     <th>Địa chỉ</th>
                     <th>Số tiền</th>
                     <th>Phuơng thức</th>
-                    <th></th>
+                    <!-- <th></th> -->
                   </tr>
                   </thead>
                   <tbody>
@@ -84,7 +79,7 @@
                     <td th:text="${model.diaChi}"></td>
                     <td th:text="${model.soTien}"></td>
                     <td th:text="${model.phuongThuc}"></td>
-                    <td><a th:href="@{'/khach-hang/giao-dich/edit/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Chi tiết</button></a></td>
+                    <!-- <td><a th:href="@{'/khach-hang/giao-dich/edit/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Chi tiết</button></a></td> -->
                   </tr>
                   </tbody>
                   <tfoot>
@@ -93,7 +88,7 @@
                     <th>Địa chỉ</th>
                     <th>Số tiền</th>
                     <th>Phuơng thức</th>
-                    <th></th>
+                    <!-- <th></th> -->
                   </tr>
                   </tfoot>
                 </table>

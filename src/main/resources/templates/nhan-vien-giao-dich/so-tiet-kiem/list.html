@@ -48,11 +48,11 @@
             </ol>
           </div>
         </div>
-        <div class="row mt-3">
+        <!-- <div class="row mt-3">
           <a href="/nhan-vien-giao-dich/so-tiet-kiem/add" class="btn btn-app bg-danger">
             <i class="fas fa-plus"></i> Thêm mới
           </a>
-        </div> 
+        </div>  -->
       </div><!-- /.container-fluid -->
     </section>
 
@@ -92,7 +92,9 @@
                     <td th:text="${model.laiSuat}"></td>
                     <td th:text="${model.soNgayGui}"></td>
                     <td th:text="${model.status}"></td>
-                    <td><a th:href="@{'/nhan-vien-giao-dich/so-tiet-kiem/edit/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Chi tiết</button></a></td>
+                    <!-- <td><a th:href="@{'/nhan-vien-giao-dich/so-tiet-kiem/edit/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Chi tiết</button></a></td> -->
+                    <td>
+                      <a th:if="${model.status==0}" th:href="@{'/nhan-vien-giao-dich/so-tiet-kiem/approve/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Approve</button></a>  
                   </tr>
                   </tbody>
                   <tfoot>

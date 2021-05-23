@@ -3,6 +3,8 @@ import java.util.Arrays;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import lombok.extern.slf4j.Slf4j;
+import web.dto.ThanhVien;
 import web.model.ChiTieuKH;
 import web.model.TaiKhoan;
 
@@ -49,9 +52,10 @@ public class ChiTieuKHController {
 	}
 
 	@PostMapping("/add")
-	public String save(ChiTieuKH chitieukh) {
+	public String save(ChiTieuKH chitieukh, HttpSession session) {
+		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
 		String url = "https://htttqlt5-server.herokuapp.com/spend-customer";
-		TaiKhoan tk = rest.getForObject("https://htttqlt5-server.herokuapp.com/account/login/KhachHang1/123456", TaiKhoan.class);
+		TaiKhoan tk = rest.getForObject("https://htttqlt5-server.herokuapp.com/account/" + thanhVien.getId(), TaiKhoan.class);
 		chitieukh.setTk(tk);
 		rest.postForObject(url, chitieukh, Void.class);
 		return "redirect:/khach-hang/chi-tieu";

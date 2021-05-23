@@ -52,6 +52,15 @@
           <a href="/khach-hang/the-ngan-hang/add" class="btn btn-app bg-danger">
             <i class="fas fa-plus"></i> Thêm mới
           </a>
+          <a href="/khach-hang/the-ngan-hang/chuyen-tien" class="btn btn-app bg-danger">
+            <i class="fas fa-plus"></i> Chuyển tiền
+          </a>
+          <a href="/khach-hang/the-ngan-hang/rut-tien" class="btn btn-app bg-danger">
+            <i class="fas fa-plus"></i> Rút tiền
+          </a>
+          <a href="/khach-hang/the-ngan-hang/gui-tien" class="btn btn-app bg-danger">
+            <i class="fas fa-plus"></i> Gửi tiền
+          </a>
         </div> 
       </div><!-- /.container-fluid -->
     </section>
@@ -76,8 +85,8 @@
                     <th>Số dư</th>
                     <th>Ngày mở</th>
                     <th>Phí duy trì</th>
-                    <th>Status</th>
-                    <th></th>
+                    <!-- <th>Status</th> -->
+                    <!-- <th></th> -->
                   </tr>
                   </thead>
                   <tbody>
@@ -87,8 +96,8 @@
                     <td th:text="${model.soDu}"></td>
                     <td th:text="${model.ngayMo}"></td>
                     <td th:text="${model.phiDuyTri}"></td>
-                    <td th:text="${model.status}"></td>
-                    <td><a th:href="@{'/khach-hang/the-ngan-hang/edit/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Chi tiết</button></a></td>
+                    <!-- <td th:text="${model.status}"></td>
+                    <td><a th:href="@{'/khach-hang/the-ngan-hang/edit/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Chi tiết</button></a></td> -->
                   </tr>
                   </tbody>
                   <tfoot>
@@ -98,8 +107,8 @@
                     <th>Số dư</th>
                     <th>Ngày mở</th>
                     <th>Phí duy trì</th>
-                    <th>Status</th>
-                    <th></th>
+                    <!-- <th>Status</th> -->
+                    <!-- <th></th> -->
                   </tr>
                   </tfoot>
                 </table>

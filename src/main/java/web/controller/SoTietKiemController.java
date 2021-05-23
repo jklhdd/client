@@ -27,7 +27,7 @@ public class SoTietKiemController {
 
     @InitBinder
     public void initBinder(final WebDataBinder binder) {
-        binder.registerCustomEditor(java.sql.Date.class, new SqlDateEditor(new SimpleDateFormat("dd/MM/yyyy")));
+        binder.registerCustomEditor(java.sql.Date.class, new SqlDateEditor(new SimpleDateFormat("MM/dd/yyyy")));
     }
 
     @GetMapping
@@ -62,11 +62,11 @@ public class SoTietKiemController {
         return "nhan-vien-giao-dich/so-tiet-kiem/list.html";
     }
 
-    @PutMapping("/approve/{id}")
+    @GetMapping("/approve/{id}")
     public String update(@PathVariable("id") int id){
         String url = "https://htttqlt5-server.herokuapp.com/saving/approve/" + id;
         rest.put(url, Void.class);
-        return "nhan-vien-giao-dich/so-tiet-kiem/list.html";
+        return "redirect:/nhan-vien-giao-dich/so-tiet-kiem";
     }
 
     @DeleteMapping("/{id}")

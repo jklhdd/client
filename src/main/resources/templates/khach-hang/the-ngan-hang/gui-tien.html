@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- JQVMap -->
@@ -31,6 +34,7 @@
 
   <!-- Preloader -->
   <div lang="en" th:replace="header :: header"> </div>
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -38,12 +42,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Thêm gói tín dụng</h1>
+            <h1>Thêm giao dịch gửi tiền</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Quản lý</a></li>
-              <li class="breadcrumb-item active">Thêm gói tín dụng</li>
+              <li class="breadcrumb-item"><a href="#">Khách hàng</a></li>
+              <li class="breadcrumb-item active">Thêm giao dịch gửi tiền</li>
             </ol>
           </div>
         </div>
@@ -67,16 +71,15 @@
             </div>
             <div class="card-body">
               <div class="form-group">
-                <label for="inputClientCompany">Tên gói</label>
-                <input type="text" th:field="*{tenGoi}" class="form-control">
+                <label>Mã thẻ ngân hàng</label>
+                <select th:field="*{mathe_nhan}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                  <option th:each="i : ${listCard}" th:value="${i.maThe}" th:text="${i.maThe}">
+                  </option>
+                </select>
               </div>
               <div class="form-group">
-                <label for="inputClientCompany">Lãi suất</label>
-                <input type="number" th:field="*{laiSuat}" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputProjectLeader">Kỳ hạn</label>
-                <input type="number" th:field="*{kyHan}" class="form-control">
+                <label for="inputClientCompany">Số tiền</label>
+                <input type="number" th:field="*{soTien}" class="form-control">
               </div>
             </div>
             <!-- /.card-body -->
@@ -86,8 +89,8 @@
       </div>
       <div class="row">
         <div class="col-6">
-          <a href="/quan-ly/goi-tin-dung" class="btn btn-secondary">Hủy bỏ</a>  
-          <input type="submit" value="Thêm mới" class="btn btn-success float-right">
+          <a href="/khach-hang/giao-dich" class="btn btn-secondary">Hủy bỏ</a>   
+          <input type="submit" value="Gửi tiền" class="btn btn-success float-right">
         </div>
       </div>
     </form>
@@ -105,9 +108,30 @@
 <script src="/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Select2 -->
+<script src="../../plugins/select2/js/select2.full.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="../../plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<!-- InputMask -->
+<script src="/plugins/moment/moment.min.js"></script>
+<script src="/plugins/inputmask/jquery.inputmask.min.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/dist/js/demo.js"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    //Date picker
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+
+    })
+  // DropzoneJS Demo Code End
+</script>
 </body>
 </html>

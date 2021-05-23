@@ -22,14 +22,13 @@ import web.dto.ThanhVien;
 @Slf4j
 @Controller
 @RequestMapping(path = "/")
-@SessionAttributes("account")
 public class HomeController {
 	private RestTemplate rest = new RestTemplate();
 
 	@GetMapping(value = {"","/login"})
 	public String home(Model model, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		if (thanhVien == null) {
+		if (session.getAttribute("account") == null) {
 			return "login";
 		}
 		model.addAttribute("account", thanhVien);
@@ -38,34 +37,40 @@ public class HomeController {
 
 	@PostMapping("/login")
 	public String login(@RequestParam("taikhoan") String tk, @RequestParam("matkhau") String mk,
-			HttpServletRequest request) {
+			HttpServletRequest request, Model model) {
 		String url = "https://htttqlt5-server.herokuapp.com/account/login/" + tk + "/" + mk;
 		ThanhVien thanhVien = rest.getForObject(url, ThanhVien.class);
 		if (thanhVien == null) {
+			model.addAttribute("model", thanhVien);
 			return "login";
 		}
 		request.getSession().setAttribute("account", thanhVien);
 		request.getSession().setMaxInactiveInterval(900);
-		return "index";
+		return "redirect:/";
 	}
 
-	@GetMapping("/create")
+	@GetMapping("/register")
 	public String registry(Model model) {
 		ThanhVien thanhVien = new ThanhVien();
-		model.addAttribute("thanhVien", thanhVien);
+		model.addAttribute("model", thanhVien);
 		return "register";
 	}
-	@PostMapping("/create/{pass}")
-	public String create(@PathVariable("pass") String mk, @RequestBody ThanhVien tv) {
+	@PostMapping("/register")
+	public String create(Model model,@RequestParam("pass") String mk,@RequestParam("repass") String remk, 
+		 ThanhVien tv) {
+		tv.setChucvu("KhachHang");
+		if(!mk.equals(remk)) {
+			model.addAttribute("model", tv);
+			return "register";
+		}
 		String url = "https://htttqlt5-server.herokuapp.com/account/create/" + mk;
-		rest.postForObject(url, tv, ThanhVien.class);
-		return "login";
+		rest.postForObject(url, tv, String.class);
+		return "redirect:/";
 	}
 
 	@GetMapping("/logout")
-	public String logout(HttpServletRequest request) {
-		request.getSession().invalidate();
-		request.getSession().removeAttribute("account");;
+	public String logout(HttpSession session) {
+		session.removeAttribute("account");;
 		return "redirect:/";
 	}
 }

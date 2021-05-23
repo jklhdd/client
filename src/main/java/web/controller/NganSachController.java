@@ -28,7 +28,7 @@ public class NganSachController {
     
     @InitBinder
     public void initBinder(final WebDataBinder binder) {
-        binder.registerCustomEditor(java.sql.Date.class, new SqlDateEditor(new SimpleDateFormat("dd/MM/yyyy")));
+        binder.registerCustomEditor(java.sql.Date.class, new SqlDateEditor(new SimpleDateFormat("MM/dd/yyyy")));
     }
 
     @GetMapping
@@ -69,7 +69,7 @@ public class NganSachController {
         return "redirect:/quan-ly/ngan-sach";
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/edit/{id}")
     public String update(@PathVariable("id") int id, NganSach ns) {
         String url = "https://htttqlt5-server.herokuapp.com/budget/" + id;
         rest.put(url, ns);

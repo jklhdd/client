@@ -51,6 +51,9 @@
           <a href="/khach-hang/vay/add" class="btn btn-app bg-danger">
             <i class="fas fa-plus"></i> Thêm mới
           </a>
+          <a href="/khach-hang/vay/tra-no" class="btn btn-app bg-danger">
+            <i class="fas fa-plus"></i>Trả nợ
+          </a>
         </div> 
       </div><!-- /.container-fluid -->
     </section>
@@ -74,18 +77,17 @@
                     <th>Khoản vay</th>
                     <th>Ngày vay</th>
                     <th>Lãi suất</th>
-                    <th>Status</th>
-                    <th></th>
+                    <!-- <th></th> -->
                   </tr>
                   </thead>
                   <tbody>
                   <tr>
                   <tr th:each="model : ${list}">
                     <td th:text="${model.id}"></td>
+                    <td th:text="${model.khoanVay}"></td>
                     <td th:text="${model.ngayVay}"></td>
                     <td th:text="${model.laiSuat}"></td>
-                    <td th:text="${model.status}"></td>
-                    <td><a th:href="@{'/khach-hang/vay/edit/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Chi tiết</button></a></td>
+                    <!-- <td><a th:href="@{'/khach-hang/vay/edit/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Chi tiết</button></a></td> -->
                   </tr>
                   </tbody>
                   <tfoot>
@@ -94,8 +96,7 @@
                     <th>Khoản vay</th>
                     <th>Ngày vay</th>
                     <th>Lãi suất</th>
-                    <th>Status</th>
-                    <th></th>
+                    <!-- <th></th> -->
                   </tr>
                   </tfoot>
                 </table>

@@ -29,4 +29,5 @@ public class TheTinDung {
 	public void setGtd(GoiTinDung gtd) {
 		this.gtd = gtd;
 	}
+	
 }

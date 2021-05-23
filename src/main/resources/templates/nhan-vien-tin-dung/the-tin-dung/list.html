@@ -47,12 +47,12 @@
               <li class="breadcrumb-item active">Thẻ tín dụng</li>
             </ol>
           </div>
-        </div>
+        </div><!-- 
         <div class="row mt-3">
           <a href="/nhan-vien-tin-dung/the-tin-dung/add" class="btn btn-app bg-danger">
             <i class="fas fa-plus"></i> Thêm mới
           </a>
-        </div> 
+        </div>  -->
       </div><!-- /.container-fluid -->
     </section>
 
@@ -83,13 +83,18 @@
                   </thead>
                   <tbody>
                   <tr th:each="model : ${list}">
+                    <td th:text="${model.id}"></td>
                     <td th:text="${model.maThe}"></td>
                     <td th:text="${model.soNgayVay}"></td>
                     <td th:text="${model.tonNo}"></td>
                     <td th:text="${model.phiDuyTri}"></td>
                     <td th:text="${model.ngayVay}"></td>
                     <td th:text="${model.status}"></td>
-                    <td><a th:href="@{'/nhan-vien-tin-dung/the-tin-dung/edit/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Chi tiết</button></a></td>
+                    <td>
+                      <!-- <a th:href="@{'/nhan-vien-tin-dung/the-tin-dung/edit/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Chi tiết</button></a> -->
+
+                      <a th:if="${model.status==0}" th:href="@{'/nhan-vien-tin-dung/the-tin-dung/approve/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Approve</button></a>  
+                    </td>
                   </tr>
                   </tbody>
                   <tfoot>

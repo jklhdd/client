@@ -53,7 +53,7 @@ public class RuiRoController {
 
     @PutMapping("/edit/{id}")
     public String update(@PathVariable("id") int id,RuiRo rr) {
-        String url = "https://htttqlt5-server.herokuapp.com/risk";
+        String url = "https://htttqlt5-server.herokuapp.com/risk/"+id;
         rest.put(url, rr);
         return "redirect:/quan-ly/rui-ro";
     }

@@ -31,7 +31,7 @@ public class TheNganHangController {
     
     @InitBinder
     public void initBinder(final WebDataBinder binder) {
-        binder.registerCustomEditor(java.sql.Date.class, new SqlDateEditor(new SimpleDateFormat("dd/MM/yyyy")));
+        binder.registerCustomEditor(java.sql.Date.class, new SqlDateEditor(new SimpleDateFormat("MM/dd/yyyy")));
     }
     
     @GetMapping
@@ -66,11 +66,11 @@ public class TheNganHangController {
         return "nhan-vien-giao-dich/the-ngan-hang/list";
     }
 
-    @PutMapping("/approve/{id}")
+    @GetMapping("/approve/{id}")
     public String update(@PathVariable("id") int id){
-        String url = "https://htttqlt5-server.herokuapp.com/atm-card/approve/"+id;
+    	String url = "https://htttqlt5-server.herokuapp.com/atm-card/approve/"+id;
         rest.put(url, Void.class);
-        return "nhan-vien-giao-dich/the-ngan-hang/list";
+        return "redirect:/nhan-vien-giao-dich/the-ngan-hang";
     }
 
     @DeleteMapping("/{id}")

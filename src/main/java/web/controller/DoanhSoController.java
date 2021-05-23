@@ -30,7 +30,7 @@ public class DoanhSoController {
 
     @InitBinder
     public void initBinder(final WebDataBinder binder) {
-        binder.registerCustomEditor(java.sql.Date.class, new SqlDateEditor(new SimpleDateFormat("dd/MM/yyyy")));
+        binder.registerCustomEditor(java.sql.Date.class, new SqlDateEditor(new SimpleDateFormat("MM/dd/yyyy")));
     }
 
     @GetMapping
@@ -58,7 +58,7 @@ public class DoanhSoController {
     }
 
     @PostMapping("/add")
-    public String save(@RequestBody DoanhSo ds){
+    public String save(DoanhSo ds){
         String url = "https://htttqlt5-server.herokuapp.com/sale";
         rest.postForObject(url, ds, Void.class);
         return "redirect:/quan-ly/doanh-so";
