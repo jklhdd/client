@@ -31,7 +31,7 @@ public class ChiTieuKHController {
 	@GetMapping
 	public String getAll(Model model, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		String url = "https://htttqlt5-server.herokuapp.com/spend-customer/all"+thanhVien.getId();
+		String url = "https://htttqlt5-server.herokuapp.com/spend-customer/all/"+thanhVien.getId();
 		List<ChiTieuKH> chitieus = Arrays.asList(rest.getForObject(url, ChiTieuKH[].class));
 		model.addAttribute("list", chitieus);
 		return "khach-hang/chi-tieu/list.html";
