@@ -29,8 +29,9 @@ public class ChiTieuKHController {
 	private RestTemplate rest = new RestTemplate();
 
 	@GetMapping
-	public String getAll(Model model) {
-		String url = "https://htttqlt5-server.herokuapp.com/spend-customer";
+	public String getAll(Model model, HttpSession session) {
+		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
+		String url = "https://htttqlt5-server.herokuapp.com/spend-customer/all"+thanhVien.getId();
 		List<ChiTieuKH> chitieus = Arrays.asList(rest.getForObject(url, ChiTieuKH[].class));
 		model.addAttribute("list", chitieus);
 		return "khach-hang/chi-tieu/list.html";
