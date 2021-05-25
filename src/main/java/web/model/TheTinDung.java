@@ -12,10 +12,8 @@ import java.sql.Date;
 public class TheTinDung {
 	private int id;
 	private  String maThe;
-	private int soNgayVay;
-	private double tonNo;
+	private double vayToiDa;
 	private double phiDuyTri;
-	private Date ngayVay;
 	private int status;
 
 	private TaiKhoan tk;

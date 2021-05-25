@@ -76,8 +76,11 @@
                 <input readonly type="text" th:field="*{taikhoan}" class="form-control">
               </div>
               <div class="form-group">
-                <label for="inputClientCompany">Chức vụ</label>
-                <input readonly type="text" th:field="*{chucvu}" class="form-control">
+                <label>Chức vụ</label>
+                <select th:field="*{chucvu}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                  <option th:each="i : ${listChucVu}" th:value="${i}" th:text="${i}" th:selected="${i == model.chucvu}">
+                  </option>
+                </select>
               </div>
               <div class="form-group">
                 <label for="inputClientCompany">Họ</label>

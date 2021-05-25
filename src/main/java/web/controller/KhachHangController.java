@@ -11,6 +11,7 @@ import web.model.HoTen;
 import web.model.TaiKhoan;
 import web.model.ThongTinCaNhan;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,6 +38,12 @@ public class KhachHangController {
 
 	@GetMapping("/edit/{id}")
 	public String getAccountById(@PathVariable int id, Model model) {
+		List<String> listChucVu = new ArrayList();
+		listChucVu.add("KhachHang");
+		listChucVu.add("Nhan Vien Giao Dich");
+		listChucVu.add("Nhan Vien Tin Dung");
+		listChucVu.add("QuanLy");
+		model.addAttribute("listChucVu", listChucVu);
 		String url = "https://htttqlt5-server.herokuapp.com/account/" + id;
 		ThanhVien thanhVien = rest.getForObject(url, ThanhVien.class);
 		model.addAttribute("model", thanhVien);
@@ -53,6 +60,12 @@ public class KhachHangController {
 
 	@GetMapping("/add")
 	public String add(Model model) {
+		List<String> listChucVu = new ArrayList();
+		listChucVu.add("KhachHang");
+		listChucVu.add("Nhan Vien Giao Dich");
+		listChucVu.add("Nhan Vien Tin Dung");
+		listChucVu.add("QuanLy");
+		model.addAttribute("listChucVu", listChucVu);
 		ThanhVien thanhVien = new ThanhVien();
 		model.addAttribute("model", thanhVien);
 		return "quan-ly/khach-hang/add";

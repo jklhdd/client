@@ -72,18 +72,21 @@
                 <input type="text" th:field="*{maThe}" class="form-control">
               </div>
               <div class="form-group">
-                <label for="inputProjectLeader">Số ngày vay</label>
-                <input type="number" th:field="*{soNgayVay}" class="form-control">
+                <label>Gói tín dụng</label>
+                <select th:field="*{gtd.id}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                  <option th:each="i : ${listGoi}" th:value="${i.id}" th:text="${i.tenGoi}">
+                  </option>
+                </select>
               </div>
               <div class="form-group">
-                <label for="inputProjectLeader">Tồn nợ</label>
-                <input type="number" th:field="*{tonNo}" class="form-control">
+                <label for="inputProjectLeader">Vay tối đa</label>
+                <input type="number" th:field="*{vayToiDa}" step="0.01" class="form-control">
               </div>
               <div class="form-group">
                 <label for="inputProjectLeader">Phí duy trì</label>
-                <input type="number" th:field="*{phiDuyTri}" class="form-control">
+                <input type="number" th:field="*{phiDuyTri}" step="0.01" class="form-control">
               </div>
-              <div class="form-group">
+           <!--    <div class="form-group">
                 <label>Ngày vay</label>
                   <div class="input-group date" id="reservationdate" data-target-input="nearest">
                       <input th:field="*{ngayVay}" type="text" class="form-control datetimepicker-input" data-target="#reservationdate">
@@ -91,7 +94,7 @@
                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                       </div>
                   </div>
-              </div>
+              </div> -->
             </div>
             <!-- /.card-body -->
           </div>

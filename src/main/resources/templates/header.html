@@ -39,7 +39,11 @@
           <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block" th:text="@{${session.account.ho} + ' ' + ${session.account.dem} + ' ' + ${session.account.ten}}" th:unless="${session == null}"></a>
+          <div class="d-block"> 
+            <a href="#"  th:text="@{${session.account.ho} + ' ' + ${session.account.dem} + ' ' + ${session.account.ten} + ' - '}" th:unless="${session == null}"></a>
+
+            <a href="/logout">Logout</a>
+          </div>
           <a href="#" class="d-block" th:text="${session.account.chucvu}" th:unless="${session == null}"></a>
         </div>
       </div>
@@ -63,6 +67,7 @@
                with font-awesome or any other icon font library -->
          
           <li th:if="${session.account.chucvu == 'KhachHang'}" class="nav-item">
+          <!-- <li class="nav-item"> -->
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-circle"></i>
               <p>
@@ -75,6 +80,12 @@
                 <a href="/khach-hang/chi-tieu" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Chi tiêu</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/khach-hang/hang-mua" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Mua hàng</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -120,6 +131,7 @@
             </ul>
           </li>
           <li th:if="${session.account.chucvu == 'Nhan Vien Giao Dich'}" class="nav-item">
+          <!-- <li class="nav-item"> -->
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-circle"></i>
               <p>
@@ -143,6 +155,7 @@
             </ul>
           </li>
           <li th:if="${session.account.chucvu == 'Nhan Vien Tin Dung'}" class="nav-item">
+          <!-- <li class="nav-item"> -->
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-circle"></i>
               <p>
@@ -166,6 +179,7 @@
             </ul>
           </li>
           <li th:if="${session.account.chucvu == 'QuanLy'}" class="nav-item">
+          <!-- <li class="nav-item"> -->
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-circle"></i>
               <p>
@@ -181,13 +195,19 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="/quan-ly/hang-mua" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Mặt hàng</p>
+                </a>
+              </li>
+             <!--  <li class="nav-item">
                 <a href="/quan-ly/dau-tu" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>
                      Đầu tư
                   </p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="/quan-ly/doanh-so" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

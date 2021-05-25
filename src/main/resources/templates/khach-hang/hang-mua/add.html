@@ -31,7 +31,6 @@
 
   <!-- Preloader -->
   <div lang="en" th:replace="header :: header"> </div>
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -39,12 +38,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Chi tiết thẻ tín dụng</h1>
+            <h1>Chi tiết chi tiêu</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Chi tiết thẻ tín dụng</li>
+              <li class="breadcrumb-item"><a href="#">Quản lý</a></li>
+              <li class="breadcrumb-item active">Thêm chi tiêu</li>
             </ol>
           </div>
         </div>
@@ -52,10 +51,8 @@
     </section>
 
     <!-- Main content -->
-   
     <section class="content">
       <form method="POST" th:object="${model}">
-      <input name="_method" type="hidden" value="PUT" />
       <div class="row">
         <div class="col-md-6">
           <div class="card card-primary">
@@ -68,43 +65,14 @@
                 </button>
               </div>
             </div>
-           <div class="card-body">
+            <div class="card-body">
               <div class="form-group">
-                <label for="inputName">Mã</label>
-                <input type="text" th:field="*{id}" readonly class="form-control">
+                <label for="inputClientCompany">Tên mặt hàng</label>
+                <input th:field="*{tenMatHang}" type="text" class="form-control">
               </div>
               <div class="form-group">
-                <label for="inputClientCompany">Mã thẻ</label>
-                <input type="text" th:field="*{maThe}" readonly class="form-control">
-              </div>
-              <div class="form-group">
-                <label>Gói tín dụng</label>
-                <select th:field="*{gtd.id}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                  <option th:each="i : ${listGoi}" th:value="${i.id}" th:text="${i.tenGoi}" th:selected="${i.id == model.gtd.id}">
-                  </option>
-                </select>
-              </div>
-             
-              <div class="form-group">
-                <label for="inputProjectLeader">Vay tối đa</label>
-                <input readonly type="number" th:field="*{vayToiDa}" step="0.01" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputProjectLeader">Phí duy trì</label>
-                <input readonly type="number" th:field="*{phiDuyTri}" step="0.01" class="form-control">
-              </div>
-             <!--  <div class="form-group">
-                <label>Ngày vay</label>
-                  <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                      <input readonly th:field="*{ngayVay}" type="text" class="form-control datetimepicker-input" data-target="#reservationdate">
-                      <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                      </div>
-                  </div>
-              </div> -->
-              <div class="form-group">
-                <label for="inputProjectLeader">Status</label>
-                <input readonly type="number" th:field="*{status}" class="form-control">
+                <label for="inputClientCompany">Tiền</label>
+                <input th:field="*{tien}" type="number" class="form-control">
               </div>
             </div>
             <!-- /.card-body -->
@@ -114,8 +82,8 @@
       </div>
       <div class="row">
         <div class="col-6">
-          <a href="/khach-hang/the-tin-dung" class="btn btn-secondary">Hủy bỏ</a>  
-          <!-- <input type="submit" value="Thêm mới" class="btn btn-success float-right"> -->
+          <a href="/quan-ly/hang-mua" class="btn btn-secondary">Hủy bỏ</a>  
+          <input type="submit" value="Thêm mới" class="btn btn-success float-right">
         </div>
       </div>
     </form>
@@ -124,11 +92,11 @@
   </div>
   <!-- /.content-wrapper -->
 
-
   <div lang="en" th:replace="footer :: footer"> </div>  
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
 
 <!-- jQuery -->
 <script src="/plugins/jquery/jquery.min.js"></script>

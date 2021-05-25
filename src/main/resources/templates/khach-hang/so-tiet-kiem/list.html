@@ -78,7 +78,7 @@
                     <th>Kỳ hạn</th>
                     <th>Lãi suất</th>
                     <th>Số ngày gửi</th>
-                    <th>Status</th>
+                    <th></th>
                     <th></th>
                   </tr>
                   </thead>
@@ -91,7 +91,7 @@
                     <td th:text="${model.kyHan}"></td>
                     <td th:text="${model.laiSuat}"></td>
                     <td th:text="${model.soNgayGui}"></td>
-                    <td th:text="${model.status}"></td>
+                    <td><a th:href="@{'/khach-hang/so-tiet-kiem/rut-tien/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Rút tiền</button></a></td>
                     <td><a th:href="@{'/khach-hang/so-tiet-kiem/edit/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Chi tiết</button></a></td>
                   </tr>
                   </tbody>
@@ -104,7 +104,7 @@
                     <th>Kỳ hạn</th>
                     <th>Lãi suất</th>
                     <th>Số ngày gửi</th>
-                    <th>Status</th>
+                    <th></th>
                     <th></th>
                   </tr>
                   </tfoot>

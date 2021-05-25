@@ -73,21 +73,20 @@
                   <tr>
                     <th>Mã thẻ tín dụng</th>
                     <th>Mã thẻ</th>
-                    <th>Số ngày vay</th>
-                    <th>Tồn nợ</th>
+                    <th>Gói tín dụng</th>
+                    <th>Vay tối đa</th>
                     <th>Phí duy trì</th>
-                    <th>Ngày vay</th>
                     <th>Status</th>
                     <th></th>
                   </tr>
                   </thead>
                   <tbody>
                   <tr th:each="model : ${list}">
+                    <td th:text="${model.id}"></td>
                     <td th:text="${model.maThe}"></td>
-                    <td th:text="${model.soNgayVay}"></td>
-                    <td th:text="${model.tonNo}"></td>
+                    <td th:text="${model.gtd.tenGoi}"></td>
+                    <td th:text="${model.vayToiDa}"></td>
                     <td th:text="${model.phiDuyTri}"></td>
-                    <td th:text="${model.ngayVay}"></td>
                     <td th:text="${model.status}"></td>
                     <td><a th:href="@{'/khach-hang/the-tin-dung/edit/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Chi tiết</button></a></td>
                   </tr>
@@ -96,10 +95,9 @@
                   <tr>
                     <th>Mã thẻ tín dụng</th>
                     <th>Mã thẻ</th>
-                    <th>Số ngày vay</th>
-                    <th>Tồn nợ</th>
+                    <th>Gói tín dụng</th>
+                    <th>Vay tối đa</th>
                     <th>Phí duy trì</th>
-                    <th>Ngày vay</th>
                     <th>Status</th>
                     <th></th>
                   </tr>
