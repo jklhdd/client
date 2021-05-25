@@ -39,7 +39,7 @@ public class HangMuaKHController {
 
 	@GetMapping
 	public String getAll(@ModelAttribute("msg") String msg, Model model) {
-		String url = "http://localhost:8080/product";
+		String url = "http://htttqlt5-server.herokuapp.com/product";
 		List<HangMua> chitieus = Arrays.asList(rest.getForObject(url, HangMua[].class));
 		model.addAttribute("list", chitieus);
 		model.addAttribute("msg", msg);
@@ -50,7 +50,7 @@ public class HangMuaKHController {
 	public String buyItem(@PathVariable("hang_id") int hang_id,
 			RedirectAttributes redirectAttributes,HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		String url = "http://localhost:8080/product/buy/" + thanhVien.getId() + "-" + hang_id;
+		String url = "http://htttqlt5-server.herokuapp.com/product/buy/" + thanhVien.getId() + "-" + hang_id;
 		String msg = rest.getForObject(url, String.class);
 		redirectAttributes.addFlashAttribute("msg", msg);
 		return "redirect:/khach-hang/hang-mua";
@@ -65,7 +65,7 @@ public class HangMuaKHController {
 
 	@PostMapping("/add")
 	public String save(HangMua hangMua, RedirectAttributes redirectAttributes) {
-		String url = "http://localhost:8080/spend";
+		String url = "http://htttqlt5-server.herokuapp.com/spend";
 		String msg = rest.postForObject(url, hangMua, String.class);
 		redirectAttributes.addFlashAttribute("msg", msg);
 		return "redirect:/khach-hang/hang-mua";

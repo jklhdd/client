@@ -53,7 +53,7 @@ public class VayKHController {
 	@GetMapping
 	public String getAll(Model model, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		String url = "http://localhost:8080/loan/" + thanhVien.getId();
+		String url = "http://htttqlt5-server.herokuapp.com/loan/" + thanhVien.getId();
 		Vay vay = null;
 		try {
 			vay = rest.getForObject(url, Vay.class);
@@ -69,7 +69,7 @@ public class VayKHController {
 
 	@GetMapping("/{taikhoan_id}")
 	public String getAllByCustomerId(@PathVariable("taikhoan_id") int id, Model model) {
-		Vay vay = rest.getForObject("http://localhost:8080/loan/" + id, Vay.class);
+		Vay vay = rest.getForObject("http://htttqlt5-server.herokuapp.com/loan/" + id, Vay.class);
 		model.addAttribute("model", vay);
 		return "khach-hang/vay/edit.html";
 	}
@@ -84,17 +84,17 @@ public class VayKHController {
 	@PostMapping("/add")
 	public String save(Vay vay, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		TaiKhoan tk = rest.getForObject("http://localhost:8080/account/" + thanhVien.getId(), TaiKhoan.class);
+		TaiKhoan tk = rest.getForObject("http://htttqlt5-server.herokuapp.com/account/" + thanhVien.getId(), TaiKhoan.class);
 		vay.setTk(tk);
 		vay.setStatus(0);
-		rest.postForObject("http://localhost:8080/loan", vay, Void.class);
+		rest.postForObject("http://htttqlt5-server.herokuapp.com/loan", vay, Void.class);
 		return "redirect:/khach-hang/vay";
 	}
 
 	@GetMapping("/tra-no")
 	public String traNo(Model model, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		String urlVay = "http://localhost:8080/loan/" + thanhVien.getId();
+		String urlVay = "http://htttqlt5-server.herokuapp.com/loan/" + thanhVien.getId();
 		Vay vay = null;
 		try {
 			vay = rest.getForObject(urlVay, Vay.class);
@@ -106,7 +106,7 @@ public class VayKHController {
 			vays.add(vay);
 		model.addAttribute("listVay", vays);
 
-		String urlNH = "http://localhost:8080/atm-card/" + thanhVien.getId();
+		String urlNH = "http://htttqlt5-server.herokuapp.com/atm-card/" + thanhVien.getId();
 		TheNganHang theNH = rest.getForObject(urlNH, TheNganHang.class);
 		List<TheNganHang> theNganHangs = new ArrayList<TheNganHang>();
 		if (theNH != null)
@@ -121,11 +121,11 @@ public class VayKHController {
 
 	@PostMapping("/tra-no")
 	public String ptraNo(@ModelAttribute("model") GiaoDichDto dto, Model model, HttpSession session) {
-		String url = "http://localhost:8080/loan/tra-no";
+		String url = "http://htttqlt5-server.herokuapp.com/loan/tra-no";
 		String msg = rest.postForObject(url, dto, String.class);
 		if (!msg.equals("Tra no thanh cong!")) {
 			ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-			String urlVay = "http://localhost:8080/loan/" + thanhVien.getId();
+			String urlVay = "http://htttqlt5-server.herokuapp.com/loan/" + thanhVien.getId();
 			Vay vay = null;
 			try {
 				vay = rest.getForObject(urlVay, Vay.class);
@@ -137,7 +137,7 @@ public class VayKHController {
 				vays.add(vay);
 			model.addAttribute("listVay", vays);
 
-			String urlNH = "http://localhost:8080/atm-card/" + thanhVien.getId();
+			String urlNH = "http://htttqlt5-server.herokuapp.com/atm-card/" + thanhVien.getId();
 			TheNganHang theNH = rest.getForObject(urlNH, TheNganHang.class);
 			List<TheNganHang> theNganHangs = new ArrayList<TheNganHang>();
 			if (theNH != null)

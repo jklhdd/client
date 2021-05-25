@@ -27,13 +27,13 @@ public class LuongController {
 	@ModelAttribute
 	public void addService(Model model) {
 		List<ThanhVien> thanhViens = Arrays
-				.asList(rest.getForObject("http://localhost:8080/account/staff", ThanhVien[].class));
+				.asList(rest.getForObject("http://htttqlt5-server.herokuapp.com/account/staff", ThanhVien[].class));
 		model.addAttribute("listStaff", thanhViens);
 	}
 
 	@GetMapping
 	public String getAll(Model model) {
-		String url = "http://localhost:8080/salary";
+		String url = "http://htttqlt5-server.herokuapp.com/salary";
 		List<Luong> luongs = Arrays.asList(rest.getForObject(url, Luong[].class));
 		model.addAttribute("list", luongs);
 		return "quan-ly/luong/list";
@@ -41,7 +41,7 @@ public class LuongController {
 
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") int id, Model model) {
-		String url = "http://localhost:8080/salary/" + id;
+		String url = "http://htttqlt5-server.herokuapp.com/salary/" + id;
 		Luong luong = rest.getForObject(url, Luong.class);
 		model.addAttribute("model", luong);
 		return "quan-ly/luong/edit";
@@ -56,14 +56,14 @@ public class LuongController {
 
 	@PostMapping("/add")
 	public String save(Luong luong) {
-		String url = "http://localhost:8080/salary";
+		String url = "http://htttqlt5-server.herokuapp.com/salary";
 		rest.postForObject(url, luong, Void.class);
 		return "redirect:/quan-ly/luong";
 	}
 
 	@PutMapping("/edit/{id}")
 	public String update(Luong luong, @PathVariable("id") int id) {
-		String url = "http://localhost:8080/salary/" + id;
+		String url = "http://htttqlt5-server.herokuapp.com/salary/" + id;
 		rest.put(url, luong);
 		return "redirect:/quan-ly/luong";
 	}

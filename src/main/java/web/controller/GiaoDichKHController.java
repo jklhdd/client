@@ -29,7 +29,7 @@ public class GiaoDichKHController {
     @GetMapping
     public String getAll(Model model, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-        String url = "http://localhost:8080/giaodich/"+thanhVien.getId();
+        String url = "http://htttqlt5-server.herokuapp.com/giaodich/"+thanhVien.getId();
         List<GiaoDich> giaoDichs = Arrays.asList(rest.getForObject(url, GiaoDich[].class));
         model.addAttribute("list", giaoDichs);
         return "khach-hang/giao-dich/list";
@@ -37,7 +37,7 @@ public class GiaoDichKHController {
 
     @GetMapping("/{customer}")
     public String getCustomerHistory(@PathVariable("customer") int id,Model model){
-        String url = "http://localhost:8080/giaodich";
+        String url = "http://htttqlt5-server.herokuapp.com/giaodich";
         List<GiaoDich> giaoDichs = Arrays.asList(rest.getForObject(url, GiaoDich[].class));
         model.addAttribute("list", giaoDichs);
         return "khach-hang/giao-dich/list";
@@ -51,7 +51,7 @@ public class GiaoDichKHController {
     }
     @GetMapping("/edit/{id}")
     public String edit(Model model,@PathVariable("id") int id){
-        String url = "http://localhost:8080/giaodich/"+ id;
+        String url = "http://htttqlt5-server.herokuapp.com/giaodich/"+ id;
         GiaoDich giaoDich = rest.getForObject(url, GiaoDich.class);
         model.addAttribute("model", giaoDich);
         return "khach-hang/giao-dich/edit";
@@ -59,8 +59,8 @@ public class GiaoDichKHController {
     @PostMapping("/add")
     public String save(GiaoDich giaoDich, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		TaiKhoan tk = rest.getForObject("http://localhost:8080/account/" + thanhVien.getId(), TaiKhoan.class);
-        String url = "http://localhost:8080/giaodich";   
+		TaiKhoan tk = rest.getForObject("http://htttqlt5-server.herokuapp.com/account/" + thanhVien.getId(), TaiKhoan.class);
+        String url = "http://htttqlt5-server.herokuapp.com/giaodich";   
         giaoDich.setTk(tk);
         rest.postForObject(url, giaoDich, Void.class);
         return "redirect:/khach-hang/giao-dich";

@@ -38,12 +38,12 @@ public class TheNganHangController {
 	@ModelAttribute
 	public void addService(Model model) {
 		List<ThanhVien> thanhViens = Arrays
-				.asList(rest.getForObject("http://localhost:8080/account/customer", ThanhVien[].class));
+				.asList(rest.getForObject("http://htttqlt5-server.herokuapp.com/account/customer", ThanhVien[].class));
 		model.addAttribute("listKhach", thanhViens);
 	}
     @GetMapping
     public String getAll(Model model){
-        String url = "http://localhost:8080/atm-card";
+        String url = "http://htttqlt5-server.herokuapp.com/atm-card";
         List<TheNganHang> theNganHangs = Arrays.asList(rest.getForObject(url, TheNganHang[].class));
         model.addAttribute("list", theNganHangs);
         return "nhan-vien-giao-dich/the-ngan-hang/list";
@@ -51,7 +51,7 @@ public class TheNganHangController {
 
     @GetMapping("/edit/{id}")
     public String getById(@PathVariable("id") int id,Model model){
-        String url = "http://localhost:8080/atm-card/detail/" + id;
+        String url = "http://htttqlt5-server.herokuapp.com/atm-card/detail/" + id;
         TheNganHang theNganHang = rest.getForObject(url, TheNganHang.class);
         model.addAttribute("model", theNganHang);
         return "nhan-vien-giao-dich/the-ngan-hang/edit";
@@ -59,7 +59,7 @@ public class TheNganHangController {
 
     @GetMapping("/edit1/{taikhoan_id}")
     public String getAllByCustomerId(@PathVariable("taikhoan_id") int id,Model model){
-        String url = "http://localhost:8080/atm-card/" + id;
+        String url = "http://htttqlt5-server.herokuapp.com/atm-card/" + id;
         TheNganHang theNganHang = rest.getForObject(url, TheNganHang.class);
         model.addAttribute("model", theNganHang);
         return "nhan-vien-giao-dich/the-ngan-hang/edit";
@@ -67,7 +67,7 @@ public class TheNganHangController {
 
     @GetMapping("/status-list/{status}")
     public String getByStatus(@PathVariable("status") int status,Model model) {
-        String url = "http://localhost:8080/atm-card/status-list/"+status;
+        String url = "http://htttqlt5-server.herokuapp.com/atm-card/status-list/"+status;
         List<TheNganHang> theNganHangs = Arrays.asList(rest.getForObject(url, TheNganHang[].class));
         model.addAttribute("list", theNganHangs);
         return "nhan-vien-giao-dich/the-ngan-hang/list";
@@ -75,14 +75,14 @@ public class TheNganHangController {
 
     @GetMapping("/approve/{id}")
     public String update(@PathVariable("id") int id){
-    	String url = "http://localhost:8080/atm-card/approve/"+id;
+    	String url = "http://htttqlt5-server.herokuapp.com/atm-card/approve/"+id;
         rest.put(url, Void.class);
         return "redirect:/nhan-vien-giao-dich/the-ngan-hang";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable ("id") int id) {
-        rest.delete("http://localhost:8080/atm-card/{id}",id);
+        rest.delete("http://htttqlt5-server.herokuapp.com/atm-card/{id}",id);
         return "nhan-vien-giao-dich/the-ngan-hang/list";
     }
 
@@ -96,14 +96,14 @@ public class TheNganHangController {
 
     @PostMapping("/add")
     public String save(TheNganHang theNganHang){
-        String url = "http://localhost:8080/atm-card";   
+        String url = "http://htttqlt5-server.herokuapp.com/atm-card";   
         rest.postForObject(url, theNganHang, Void.class);
         return "redirect:/nhan-vien-giao-dich/the-ngan-hang";
     }
 
     @PostMapping("/giao-dich")
     public String giaoDichTien(GiaoDichDto dto){
-        String url = "http://localhost:8080/atm-card";   
+        String url = "http://htttqlt5-server.herokuapp.com/atm-card";   
         rest.postForObject(url, dto, Void.class);
         return "redirect:/nhan-vien-giao-dich/the-ngan-hang";
     }

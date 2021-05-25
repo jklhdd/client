@@ -41,7 +41,7 @@ public class ChiTieuController {
 
 	@GetMapping
 	public String getAll(Model model) {
-		String url = "http://localhost:8080/spend";
+		String url = "http://htttqlt5-server.herokuapp.com/spend";
 		List<ChiTieu> chitieus = Arrays.asList(rest.getForObject(url, ChiTieu[].class));
 		model.addAttribute("list", chitieus);
 		return "quan-ly/chi-tieu/list";
@@ -49,7 +49,7 @@ public class ChiTieuController {
 
 	@GetMapping("/edit/{id}")
 	public String detail(@PathVariable("id") int id, Model model) {
-		String url = "http://localhost:8080/spend/" + id;
+		String url = "http://htttqlt5-server.herokuapp.com/spend/" + id;
 		ChiTieu chitieu = rest.getForObject(url, ChiTieu.class);
 		model.addAttribute("model", chitieu);
 		return "quan-ly/chi-tieu/edit";
@@ -64,7 +64,7 @@ public class ChiTieuController {
 
 	@PostMapping("/add")
 	public String save(ChiTieu chitieu) {
-		String url = "http://localhost:8080/spend";
+		String url = "http://htttqlt5-server.herokuapp.com/spend";
 		rest.postForObject(url, chitieu, Void.class);
 		return "redirect:/quan-ly/chi-tieu";
 	}

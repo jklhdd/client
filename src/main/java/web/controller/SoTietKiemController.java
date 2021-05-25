@@ -36,13 +36,13 @@ public class SoTietKiemController {
 	@ModelAttribute
 	public void addService(Model model) {
 		List<ThanhVien> thanhViens = Arrays
-				.asList(rest.getForObject("http://localhost:8080/account/customer", ThanhVien[].class));
+				.asList(rest.getForObject("http://htttqlt5-server.herokuapp.com/account/customer", ThanhVien[].class));
 		model.addAttribute("listKhach", thanhViens);
 	}
 
 	@GetMapping
 	public String getAll(Model model) {
-		String url = "http://localhost:8080/saving";
+		String url = "http://htttqlt5-server.herokuapp.com/saving";
 		List<SoTietKiem> soTietKiems = Arrays.asList(rest.getForObject(url, SoTietKiem[].class));
 		model.addAttribute("list", soTietKiems);
 		return "nhan-vien-giao-dich/so-tiet-kiem/list.html";
@@ -50,7 +50,7 @@ public class SoTietKiemController {
 
 	@GetMapping("/edit/{id}")
 	public String getById(@PathVariable("id") int id, Model model) {
-		String url = "http://localhost:8080/saving/" + id;
+		String url = "http://htttqlt5-server.herokuapp.com/saving/" + id;
 		SoTietKiem soTietKiem = rest.getForObject(url, SoTietKiem.class);
 		model.addAttribute("model", soTietKiem);
 		return "nhan-vien-giao-dich/so-tiet-kiem/edit.html";
@@ -58,7 +58,7 @@ public class SoTietKiemController {
 
 	@GetMapping("/{taikhoan_id}")
 	public String getAllByCustomerId(@PathVariable("taikhoan_id") int id, Model model) {
-		String url = "http://localhost:8080/saving/" + id;
+		String url = "http://htttqlt5-server.herokuapp.com/saving/" + id;
 		SoTietKiem soTietKiem = rest.getForObject(url, SoTietKiem.class);
 		model.addAttribute("model", soTietKiem);
 		return "nhan-vien-giao-dich/so-tiet-kiem/edit.html";
@@ -66,7 +66,7 @@ public class SoTietKiemController {
 
 	@GetMapping("/status-list/{status}")
 	public String getByStatus(@PathVariable("status") int status, Model model) {
-		String url = "http://localhost:8080/saving";
+		String url = "http://htttqlt5-server.herokuapp.com/saving";
 		List<SoTietKiem> soTietKiems = Arrays.asList(rest.getForObject(url, SoTietKiem[].class));
 		model.addAttribute("list", soTietKiems);
 		return "nhan-vien-giao-dich/so-tiet-kiem/list.html";
@@ -74,14 +74,14 @@ public class SoTietKiemController {
 
 	@GetMapping("/approve/{id}")
 	public String update(@PathVariable("id") int id) {
-		String url = "http://localhost:8080/saving/approve/" + id;
+		String url = "http://htttqlt5-server.herokuapp.com/saving/approve/" + id;
 		rest.put(url, Void.class);
 		return "redirect:/nhan-vien-giao-dich/so-tiet-kiem";
 	}
 
 	@DeleteMapping("/{id}")
 	public String delete(@PathVariable("id") int id) {
-		rest.delete("http://localhost:8080/saving/{id}", id);
+		rest.delete("http://htttqlt5-server.herokuapp.com/saving/{id}", id);
 		return "nhan-vien-giao-dich/so-tiet-kiem/list.html";
 	}
 
@@ -94,7 +94,7 @@ public class SoTietKiemController {
 
 	@PostMapping("/add")
 	public String save(SoTietKiem ttd) {
-		String url = "http://localhost:8080/saving";
+		String url = "http://htttqlt5-server.herokuapp.com/saving";
 		rest.postForObject(url, ttd, Void.class);
 		return "redirect:/nhan-vien-giao-dich/so-tiet-kiem";
 	}

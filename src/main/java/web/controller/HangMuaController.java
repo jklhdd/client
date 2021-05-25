@@ -36,7 +36,7 @@ public class HangMuaController {
 
 	@GetMapping
 	public String getAll(@ModelAttribute("msg") String msg, Model model) {
-		String url = "http://localhost:8080/product";
+		String url = "http://htttqlt5-server.herokuapp.com/product";
 		List<HangMua> chitieus = Arrays.asList(rest.getForObject(url, HangMua[].class));
 		model.addAttribute("list", chitieus);
 		model.addAttribute("msg", msg);
@@ -46,7 +46,7 @@ public class HangMuaController {
 	@GetMapping("/buy/{hang_id}")
 	public String buyItem(@PathVariable("tk_id") int tk_id, @PathVariable("hang_id") int hang_id,
 			RedirectAttributes redirectAttributes) {
-		String url = "http://localhost:8080/product/buy/" + tk_id + "-" + hang_id;
+		String url = "http://htttqlt5-server.herokuapp.com/product/buy/" + tk_id + "-" + hang_id;
 		String msg = rest.getForObject(url, String.class);
 		redirectAttributes.addFlashAttribute("msg", msg);
 		return "redirect:/quan-ly/hang-mua";
@@ -61,7 +61,7 @@ public class HangMuaController {
 
 	@PostMapping("/add")
 	public String save(HangMua hangMua, RedirectAttributes redirectAttributes) {
-		String url = "http://localhost:8080/product";
+		String url = "http://htttqlt5-server.herokuapp.com/product";
 		String msg = rest.postForObject(url, hangMua, String.class);
 		redirectAttributes.addFlashAttribute("msg", msg);
 		return "redirect:/quan-ly/hang-mua";

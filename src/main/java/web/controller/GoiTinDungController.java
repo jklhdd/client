@@ -25,7 +25,7 @@ public class GoiTinDungController {
 
     @GetMapping
     public String getAll(Model model){
-        String url = "http://localhost:8080/credit-type";
+        String url = "http://htttqlt5-server.herokuapp.com/credit-type";
         List<GoiTinDung> goiTinDungs = Arrays.asList(rest.getForObject(url, GoiTinDung[].class));
         model.addAttribute("list", goiTinDungs);
         return "quan-ly/goi-tin-dung/list.html";
@@ -33,7 +33,7 @@ public class GoiTinDungController {
 
     @GetMapping("/edit/{id}")
     public String getAll(@PathVariable("id") int id,Model model){
-        String url = "http://localhost:8080/credit-type/" + id;
+        String url = "http://htttqlt5-server.herokuapp.com/credit-type/" + id;
         GoiTinDung goiTinDung = rest.getForObject(url, GoiTinDung.class);
         model.addAttribute("model", goiTinDung);
         return "quan-ly/goi-tin-dung/edit";
@@ -48,7 +48,7 @@ public class GoiTinDungController {
 
     @PostMapping("/add")
     public String save(GoiTinDung gtd){
-        String url = "http://localhost:8080/credit-type";   
+        String url = "http://htttqlt5-server.herokuapp.com/credit-type";   
         rest.postForObject(url, gtd, Void.class);
         return "redirect:/quan-ly/goi-tin-dung";
     }
