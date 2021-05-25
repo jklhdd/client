@@ -33,6 +33,7 @@ import org.springframework.web.bind.WebDataBinder;
 import web.ultis.SqlDateEditor;
 import lombok.extern.slf4j.Slf4j;
 import web.dto.GiaoDichDto;
+import web.dto.ThanhVien;
 import web.model.*;
 
 @Slf4j
@@ -46,16 +47,23 @@ public class VayController {
 		binder.registerCustomEditor(java.sql.Date.class, new SqlDateEditor(new SimpleDateFormat("MM/dd/yyyy")));
 	}
 
+	@ModelAttribute
+	public void addService(Model model) {
+		List<ThanhVien> thanhViens = Arrays
+				.asList(rest.getForObject("http://localhost:8080/account/customer", ThanhVien[].class));
+		model.addAttribute("listKhach", thanhViens);
+	}
+
 	@GetMapping
 	public String getAll(Model model) {
-		List<Vay> vays = Arrays.asList(rest.getForObject("https://htttqlt5-server.herokuapp.com/loan", Vay[].class));
+		List<Vay> vays = Arrays.asList(rest.getForObject("http://localhost:8080/loan", Vay[].class));
 		model.addAttribute("list", vays);
 		return "nhan-vien-tin-dung/vay/list.html";
 	}
 
 	@GetMapping("/{taikhoan_id}")
 	public String getAllByCustomerId(@PathVariable("taikhoan_id") int id, Model model) {
-		Vay vay = rest.getForObject("https://htttqlt5-server.herokuapp.com/loan/" + id, Vay.class);
+		Vay vay = rest.getForObject("http://localhost:8080/loan/" + id, Vay.class);
 		model.addAttribute("model", vay);
 		return "nhan-vien-tin-dung/vay/edit.html";
 	}
@@ -69,20 +77,20 @@ public class VayController {
 
 	@PostMapping("/add")
 	public String save(Vay vay) {
-		rest.postForObject("https://htttqlt5-server.herokuapp.com/loan", vay, Vay.class);
+		rest.postForObject("http://localhost:8080/loan", vay, Vay.class);
 		return "redirect:/nhan-vien-tin-dung/vay";
 	}
 
 	@GetMapping("/approve/{id}")
 	public String update(@PathVariable("id") int id) {
-		String url = "https://htttqlt5-server.herokuapp.com/loan/approve/" + id;
+		String url = "http://localhost:8080/loan/approve/" + id;
 		rest.put(url, Void.class);
 		return "redirect:/nhan-vien-tin-dung/vay";
 	}
 
 	@PostMapping("/tra-no")
 	public String traNo(GiaoDichDto dto) {
-		String url = "https://htttqlt5-server.herokuapp.com/loan/tra-no";
+		String url = "http://localhost:8080/loan/tra-no";
 		rest.postForObject(url, dto, String.class);
 		return "redirect:/nhan-vien-tin-dung/vay";
 	}

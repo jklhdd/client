@@ -27,7 +27,7 @@ public class DauTuController {
 
     @GetMapping
     public String getAll(Model model){
-        String url = "https://htttqlt5-server.herokuapp.com/invest";
+        String url = "http://localhost:8080/invest";
         List<DauTu> dauTus = Arrays.asList(rest.getForObject(url, DauTu[].class));
         model.addAttribute("list", dauTus);
         return "quan-ly/dau-tu/list.html";
@@ -41,14 +41,14 @@ public class DauTuController {
     }
     @PostMapping("/add")
     public String save(DauTu dt){
-        String url = "https://htttqlt5-server.herokuapp.com/invest";
+        String url = "http://localhost:8080/invest";   
         rest.postForObject(url, dt, DauTu.class);
 		return "redirect:/quan-ly/dau-tu";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") int id, Model model){
-        String url = "https://htttqlt5-server.herokuapp.com/invest/" + id;
+        String url = "http://localhost:8080/invest/" + id;
         DauTu dauTu = rest.getForObject(url, DauTu.class);
         model.addAttribute("model", dauTu);
         return "quan-ly/dau-tu/edit";
@@ -57,7 +57,7 @@ public class DauTuController {
 
     @PutMapping("/edit/{id}")
     public String update(DauTu dt,@PathVariable("id") int id) {
-        String url = "https://htttqlt5-server.herokuapp.com/invest/" + id;
+        String url = "http://localhost:8080/invest/" + id;
         rest.put(url, dt);
 		return "redirect:/quan-ly/dau-tu";
     }

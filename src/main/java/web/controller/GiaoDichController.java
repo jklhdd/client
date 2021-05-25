@@ -28,7 +28,7 @@ public class GiaoDichController {
 
     @GetMapping
     public String getAll(Model model){
-        String url = "https://htttqlt5-server.herokuapp.com/account/customer";
+        String url = "http://localhost:8080/account/customer";
         List<ThanhVien> thanhViens = Arrays.asList(rest.getForObject(url, ThanhVien[].class));
         model.addAttribute("list", thanhViens);
         return "quan-ly/giao-dich/list";
@@ -36,7 +36,7 @@ public class GiaoDichController {
 
     @GetMapping("/edit/{customer}")
     public String getCustomerHistory(@PathVariable("customer") int id,Model model){
-        String url = "https://htttqlt5-server.herokuapp.com/giaodich/"+id;
+        String url = "http://localhost:8080/giaodich/"+id;
         List<GiaoDich> giaoDichs = Arrays.asList(rest.getForObject(url, GiaoDich[].class));
         model.addAttribute("list", giaoDichs);
         model.addAttribute("tk", giaoDichs.get(0).getTk());
@@ -52,8 +52,8 @@ public class GiaoDichController {
     @PostMapping("/add")
     public String save(GiaoDich giaoDich, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		TaiKhoan tk = rest.getForObject("https://htttqlt5-server.herokuapp.com/account/" + thanhVien.getId(), TaiKhoan.class);
-        String url = "https://htttqlt5-server.herokuapp.com/giaodich";
+		TaiKhoan tk = rest.getForObject("http://localhost:8080/account/" + thanhVien.getId(), TaiKhoan.class);
+        String url = "http://localhost:8080/giaodich";   
         giaoDich.setTk(tk);
         rest.postForObject(url, giaoDich, Void.class);
         return "redirect:/quan-ly/giao-dich";

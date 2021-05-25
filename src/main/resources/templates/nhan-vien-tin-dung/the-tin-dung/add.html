@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- JQVMap -->
@@ -69,21 +72,31 @@
            <div class="card-body">
               <div class="form-group">
                 <label for="inputClientCompany">Mã thẻ</label>
-                <input type="text" th:field="*{maThe}" readonly class="form-control">
+                <input type="text" th:field="*{maThe}" class="form-control">
               </div>
               <div class="form-group">
-                <label for="inputProjectLeader">Số ngày vay</label>
-                <input type="number" th:field="*{soNgayVay}" class="form-control">
+                <label>Khách hàng</label>
+                <select th:field="*{tk.id}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                  <option th:each="i : ${listKhach}" th:value="${i.id}" th:text="@{${i.id} +' - '+${i.ten}}">
+                  </option>
+                </select>
               </div>
               <div class="form-group">
-                <label for="inputProjectLeader">Tồn nợ</label>
-                <input type="number" th:field="*{tonNo}" class="form-control">
+                <label>Gói tín dụng</label>
+                <select th:field="*{gtd.id}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                  <option th:each="i : ${listGoi}" th:value="${i.id}" th:text="${i.tenGoi}">
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="inputProjectLeader">Vay tối đa</label>
+                <input type="number" th:field="*{vayToiDa}" step="0.01" class="form-control">
               </div>
               <div class="form-group">
                 <label for="inputProjectLeader">Phí duy trì</label>
-                <input type="number" th:field="*{phiDuyTri}" class="form-control">
+                <input type="number" th:field="*{phiDuyTri}" step="0.01" class="form-control">
               </div>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label>Ngày vay</label>
                   <div class="input-group date" id="reservationdate" data-target-input="nearest">
                       <input th:field="*{ngayVay}" type="text" class="form-control datetimepicker-input" data-target="#reservationdate">
@@ -91,11 +104,7 @@
                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                       </div>
                   </div>
-              </div>
-              <div class="form-group">
-                <label for="inputProjectLeader">Status</label>
-                <input type="number" th:field="*{status}" class="form-control">
-              </div>
+              </div> -->
             </div>
             <!-- /.card-body -->
           </div>
@@ -123,6 +132,10 @@
 <script src="/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Select2 -->
+<script src="/plugins/select2/js/select2.full.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
 <!-- InputMask -->
 <script src="/plugins/moment/moment.min.js"></script>
 <script src="/plugins/inputmask/jquery.inputmask.min.js"></script>
@@ -134,6 +147,8 @@
 <script src="/dist/js/demo.js"></script>
 <script>
   $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
     //Date picker
     $('#reservationdate').datetimepicker({
         format: 'L'
