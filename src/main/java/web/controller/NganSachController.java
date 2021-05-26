@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,9 @@ import web.ultis.SqlDateEditor;
 @RequestMapping(path = "/quan-ly/ngan-sach" , produces = "application/json" )
 public class NganSachController {
 	private RestTemplate rest = new RestTemplate();
+
+    @Autowired
+    private Environment env;
     
     @InitBinder
     public void initBinder(final WebDataBinder binder) {
@@ -33,7 +37,7 @@ public class NganSachController {
 
     @GetMapping
     public String getAll(Model model){
-        String url = "http://htttqlt5-server.herokuapp.com/budget";
+        String url = env.getProperty("web.server.url") + "/budget";
         List<NganSach> nganSachs = Arrays.asList(rest.getForObject(url, NganSach[].class));
         model.addAttribute("list", nganSachs);
         return "quan-ly/ngan-sach/list";
@@ -41,7 +45,7 @@ public class NganSachController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") int id,Model model){
-        String url = "http://htttqlt5-server.herokuapp.com/budget/" + id;
+        String url = env.getProperty("web.server.url") + "/budget/" + id;
         NganSach nganSach = rest.getForObject(url, NganSach.class);
         model.addAttribute("model", nganSach);
         return "quan-ly/ngan-sach/edit";
@@ -49,7 +53,7 @@ public class NganSachController {
 
     @GetMapping("/{month}/{year}")
     public String getAllByMonthAndYear(@PathVariable("month") int month, @PathVariable("year") int year,Model model){
-        String url = "http://htttqlt5-server.herokuapp.com/budget/" + month + "/" + year;
+        String url = env.getProperty("web.server.url") + "/budget/" + month + "/" + year;
         NganSach nganSach = rest.getForObject(url, NganSach.class);
         model.addAttribute("model", nganSach);
         return "quan-ly/ngan-sach/edit";
@@ -64,14 +68,14 @@ public class NganSachController {
 
     @PostMapping("/add")
     public String save(NganSach ns){
-        String url = "http://htttqlt5-server.herokuapp.com/budget";   
+        String url = env.getProperty("web.server.url") + "/	budget";   
         rest.postForObject(url, ns, Void.class);
         return "redirect:/quan-ly/ngan-sach";
     }
 
     @PutMapping("/edit/{id}")
     public String update(@PathVariable("id") int id, NganSach ns) {
-        String url = "http://htttqlt5-server.herokuapp.com/budget/" + id;
+        String url = env.getProperty("web.server.url") + "/budget/" + id;
         rest.put(url, ns);
         return "redirect:/quan-ly/ngan-sach";
     }

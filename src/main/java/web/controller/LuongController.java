@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,16 +25,19 @@ import web.model.Luong;
 public class LuongController {
 	private RestTemplate rest = new RestTemplate();
 
+	@Autowired
+	private Environment env;
+
 	@ModelAttribute
 	public void addService(Model model) {
 		List<ThanhVien> thanhViens = Arrays
-				.asList(rest.getForObject("http://htttqlt5-server.herokuapp.com/account/staff", ThanhVien[].class));
+				.asList(rest.getForObject(env.getProperty("web.server.url") + "/account/staff", ThanhVien[].class));
 		model.addAttribute("listStaff", thanhViens);
 	}
 
 	@GetMapping
 	public String getAll(Model model) {
-		String url = "http://htttqlt5-server.herokuapp.com/salary";
+		String url = env.getProperty("web.server.url") + "/salary";
 		List<Luong> luongs = Arrays.asList(rest.getForObject(url, Luong[].class));
 		model.addAttribute("list", luongs);
 		return "quan-ly/luong/list";
@@ -41,7 +45,7 @@ public class LuongController {
 
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") int id, Model model) {
-		String url = "http://htttqlt5-server.herokuapp.com/salary/" + id;
+		String url = env.getProperty("web.server.url") + "/salary/" + id;
 		Luong luong = rest.getForObject(url, Luong.class);
 		model.addAttribute("model", luong);
 		return "quan-ly/luong/edit";
@@ -56,14 +60,14 @@ public class LuongController {
 
 	@PostMapping("/add")
 	public String save(Luong luong) {
-		String url = "http://htttqlt5-server.herokuapp.com/salary";
+		String url = env.getProperty("web.server.url") + "/salary";
 		rest.postForObject(url, luong, Void.class);
 		return "redirect:/quan-ly/luong";
 	}
 
 	@PutMapping("/edit/{id}")
 	public String update(Luong luong, @PathVariable("id") int id) {
-		String url = "http://htttqlt5-server.herokuapp.com/salary/" + id;
+		String url = env.getProperty("web.server.url") + "/salary/" + id;
 		rest.put(url, luong);
 		return "redirect:/quan-ly/luong";
 	}

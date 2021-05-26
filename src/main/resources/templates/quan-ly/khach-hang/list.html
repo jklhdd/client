@@ -81,7 +81,6 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
                   <tr th:each="model : ${list}">
                     <td th:text="${model.id}"></td>
                     <td th:text="${model.taikhoan}"></td>
@@ -90,7 +89,6 @@
                     <td th:text="${model.sdt}"></td>
                     <td th:text="${model.cmt}"></td>
                     <td><a th:href="@{'/quan-ly/khach-hang/edit/'+${model.id}}" ><button type="button" class="btn btn-block btn-info">Chi tiết</button></a></td>
-                  </tr>
                   </tr>
                   </tbody>
                   <tfoot>

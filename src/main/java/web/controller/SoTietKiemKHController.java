@@ -9,6 +9,7 @@ import web.dto.ThanhVien;
 import web.model.SoTietKiem;
 import web.model.TaiKhoan;
 
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,9 @@ import javax.servlet.http.HttpSession;
 public class SoTietKiemKHController {
 	private RestTemplate rest = new RestTemplate();
 
+	@Autowired
+	private Environment env;
+
 	@InitBinder
 	public void initBinder(final WebDataBinder binder) {
 		binder.registerCustomEditor(java.sql.Date.class, new SqlDateEditor(new SimpleDateFormat("MM/dd/yyyy")));
@@ -41,7 +45,7 @@ public class SoTietKiemKHController {
 	@GetMapping
 	public String getAll(Model model, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		String url = "http://htttqlt5-server.herokuapp.com/saving/" + thanhVien.getId();
+		String url = env.getProperty("web.server.url") + "/saving/" + thanhVien.getId();
 		SoTietKiem soTietKiem = null;
 		try {
 			soTietKiem = rest.getForObject(url, SoTietKiem.class);
@@ -57,7 +61,7 @@ public class SoTietKiemKHController {
 
 	@GetMapping("/edit/{id}")
 	public String getById(@PathVariable("id") int id, Model model) {
-		String url = "http://htttqlt5-server.herokuapp.com/saving/" + id;
+		String url = env.getProperty("web.server.url") + "/saving/" + id;
 		SoTietKiem soTietKiem = rest.getForObject(url, SoTietKiem.class);
 		model.addAttribute("model", soTietKiem);
 		return "khach-hang/so-tiet-kiem/edit.html";
@@ -65,7 +69,7 @@ public class SoTietKiemKHController {
 
 	@GetMapping("/{taikhoan_id}")
 	public String getAllByCustomerId(@PathVariable("taikhoan_id") int id, Model model) {
-		String url = "http://htttqlt5-server.herokuapp.com/saving/" + id;
+		String url = env.getProperty("web.server.url") + "/saving/" + id;
 		SoTietKiem soTietKiem = rest.getForObject(url, SoTietKiem.class);
 		model.addAttribute("model", soTietKiem);
 		return "khach-hang/so-tiet-kiem/edit.html";
@@ -73,7 +77,7 @@ public class SoTietKiemKHController {
 
 	@GetMapping("/status-list/{status}")
 	public String getByStatus(@PathVariable("status") int status, Model model) {
-		String url = "http://htttqlt5-server.herokuapp.com/saving";
+		String url = env.getProperty("web.server.url") + "/saving";
 		List<SoTietKiem> soTietKiems = Arrays.asList(rest.getForObject(url, SoTietKiem[].class));
 		model.addAttribute("list", soTietKiems);
 		return "khach-hang/so-tiet-kiem/list.html";
@@ -81,14 +85,14 @@ public class SoTietKiemKHController {
 
 	@GetMapping("/rut-tien/{id}")
 	public String update(@PathVariable("id") int id) {
-		String url = "http://htttqlt5-server.herokuapp.com/saving/rut-tien/" + id;
+		String url = env.getProperty("web.server.url") + "/saving/rut-tien/" + id;
 		rest.getForObject(url, Void.class);
 		return "redirect:/khach-hang/so-tiet-kiem";
 	}
 
 	@DeleteMapping("/{id}")
 	public String delete(@PathVariable("id") int id) {
-		rest.delete("http://htttqlt5-server.herokuapp.com/saving/{id}", id);
+		rest.delete(env.getProperty("web.server.url") + "/saving/{id}", id);
 		return "khach-hang/so-tiet-kiem/list.html";
 	}
 
@@ -102,10 +106,10 @@ public class SoTietKiemKHController {
 	@PostMapping("/add")
 	public String save(SoTietKiem ttd, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		TaiKhoan tk = rest.getForObject("http://htttqlt5-server.herokuapp.com/account/" + thanhVien.getId(), TaiKhoan.class);
+		TaiKhoan tk = rest.getForObject(env.getProperty("web.server.url") + "/account/" + thanhVien.getId(), TaiKhoan.class);
 		ttd.setTk(tk);
 		ttd.setStatus(0);
-		String url = "http://htttqlt5-server.herokuapp.com/saving";
+		String url = env.getProperty("web.server.url") + "/saving";
 		rest.postForObject(url, ttd, Void.class);
 		return "redirect:/khach-hang/so-tiet-kiem";
 	}

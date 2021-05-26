@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -42,6 +44,9 @@ import web.model.*;
 public class VayController {
 	private RestTemplate rest = new RestTemplate();
 
+	@Autowired
+	private Environment env;
+
 	@InitBinder
 	public void initBinder(final WebDataBinder binder) {
 		binder.registerCustomEditor(java.sql.Date.class, new SqlDateEditor(new SimpleDateFormat("MM/dd/yyyy")));
@@ -50,20 +55,20 @@ public class VayController {
 	@ModelAttribute
 	public void addService(Model model) {
 		List<ThanhVien> thanhViens = Arrays
-				.asList(rest.getForObject("http://htttqlt5-server.herokuapp.com/account/customer", ThanhVien[].class));
+				.asList(rest.getForObject(env.getProperty("web.server.url") + "/account/customer", ThanhVien[].class));
 		model.addAttribute("listKhach", thanhViens);
 	}
 
 	@GetMapping
 	public String getAll(Model model) {
-		List<Vay> vays = Arrays.asList(rest.getForObject("http://htttqlt5-server.herokuapp.com/loan", Vay[].class));
+		List<Vay> vays = Arrays.asList(rest.getForObject(env.getProperty("web.server.url") + "/loan", Vay[].class));
 		model.addAttribute("list", vays);
 		return "nhan-vien-tin-dung/vay/list.html";
 	}
 
 	@GetMapping("/{taikhoan_id}")
 	public String getAllByCustomerId(@PathVariable("taikhoan_id") int id, Model model) {
-		Vay vay = rest.getForObject("http://htttqlt5-server.herokuapp.com/loan/" + id, Vay.class);
+		Vay vay = rest.getForObject(env.getProperty("web.server.url") + "/loan/" + id, Vay.class);
 		model.addAttribute("model", vay);
 		return "nhan-vien-tin-dung/vay/edit.html";
 	}
@@ -77,20 +82,20 @@ public class VayController {
 
 	@PostMapping("/add")
 	public String save(Vay vay) {
-		rest.postForObject("http://htttqlt5-server.herokuapp.com/loan", vay, Vay.class);
+		rest.postForObject(env.getProperty("web.server.url") + "/loan", vay, Vay.class);
 		return "redirect:/nhan-vien-tin-dung/vay";
 	}
 
 	@GetMapping("/approve/{id}")
 	public String update(@PathVariable("id") int id) {
-		String url = "http://htttqlt5-server.herokuapp.com/loan/approve/" + id;
+		String url = env.getProperty("web.server.url") + "/loan/approve/" + id;
 		rest.put(url, Void.class);
 		return "redirect:/nhan-vien-tin-dung/vay";
 	}
 
 	@PostMapping("/tra-no")
 	public String traNo(GiaoDichDto dto) {
-		String url = "http://htttqlt5-server.herokuapp.com/loan/tra-no";
+		String url = env.getProperty("web.server.url") + "/loan/tra-no";
 		rest.postForObject(url, dto, String.class);
 		return "redirect:/nhan-vien-tin-dung/vay";
 	}

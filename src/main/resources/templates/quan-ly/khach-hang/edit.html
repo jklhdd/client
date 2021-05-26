@@ -38,12 +38,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Chi tiết khách hàng</h1>
+            <h1>Cập nhật khách hàng</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Quản lý</a></li>
-              <li class="breadcrumb-item active">Chi tiết khách hàng</li>
+              <li class="breadcrumb-item active">Cập nhật khách hàng</li>
             </ol>
           </div>
         </div>
@@ -73,34 +73,18 @@
               </div>
               <div class="form-group">
                 <label for="inputClientCompany">Tài khoản</label>
-                <input readonly type="text" th:field="*{taikhoan}" class="form-control">
+                <input readonly type="text" th:field="*{taiKhoan}" class="form-control">
               </div>
               <div class="form-group">
                 <label>Chức vụ</label>
-                <select th:field="*{chucvu}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                  <option th:each="i : ${listChucVu}" th:value="${i}" th:text="${i}" th:selected="${i == model.chucvu}">
+                <select th:field="*{chucVu}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                  <option th:each="i : ${listChucVu}" th:value="${i}" th:text="${i}" th:selected="${i == model.chucVu}">
                   </option>
                 </select>
               </div>
-              <div class="form-group">
-                <label for="inputClientCompany">Họ</label>
-                <input readonly type="text" th:field="*{ho}" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputClientCompany">Tên đệm</label>
-                <input readonly type="text" th:field="*{dem}" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputClientCompany">Tên</label>
-                <input readonly type="text" th:field="*{ten}" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputClientCompany">Số điện thoại</label>
-                <input readonly type="text" th:field="*{sdt}" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputProjectLeader">Chứng minh thư</label>
-                <input readonly type="text" th:field="*{cmt}" class="form-control">
+              <div class="form-group" hidden>
+                <label for="inputClientCompany">Mật khẩu</label>
+                <input readonly type="text" th:field="*{matKhau}" class="form-control">
               </div>
             </div>
             <!-- /.card-body -->
@@ -111,7 +95,7 @@
       <div class="row">
         <div class="col-6">
           <a href="/quan-ly/khach-hang" class="btn btn-secondary">Hủy bỏ</a>  
-          <!-- <input type="submit" value="Cập nhật" class="btn btn-success float-right"> -->
+          <input type="submit" value="Cập nhật" class="btn btn-success float-right">
         </div>
       </div>
     </form>

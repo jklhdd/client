@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +23,12 @@ import web.model.RuiRo;
 public class RuiRoController {
 	private RestTemplate rest = new RestTemplate();
 
+    @Autowired
+    private Environment env;
+
     @GetMapping
     public String getAll(Model model){
-        String url = "http://htttqlt5-server.herokuapp.com/risk";
+        String url = env.getProperty("web.server.url") + "/risk";
         List<RuiRo> ruiRos = Arrays.asList(rest.getForObject(url, RuiRo[].class));
         model.addAttribute("list", ruiRos);
         return "quan-ly/rui-ro/list";
@@ -32,7 +36,7 @@ public class RuiRoController {
 
     @GetMapping("/edit/{id}")
     public String getAll(@PathVariable("id") int id,Model model){
-        String url = "http://htttqlt5-server.herokuapp.com/risk/" + id;
+        String url = env.getProperty("web.server.url") + "/risk/" + id;
         RuiRo ruiRo = rest.getForObject(url, RuiRo.class);
         model.addAttribute("model", ruiRo);
         return "quan-ly/rui-ro/edit";
@@ -46,14 +50,14 @@ public class RuiRoController {
     }
     @PostMapping("/add")
     public String save(RuiRo rr){
-        String url = "http://htttqlt5-server.herokuapp.com/risk";   
+        String url = env.getProperty("web.server.url") + "/risk";   
         rest.postForObject(url, rr, Void.class);
         return "redirect:/quan-ly/rui-ro";
     }
 
     @PutMapping("/edit/{id}")
     public String update(@PathVariable("id") int id,RuiRo rr) {
-        String url = "http://htttqlt5-server.herokuapp.com/risk/"+id;
+        String url = env.getProperty("web.server.url") + "/risk/"+id;
         rest.put(url, rr);
         return "redirect:/quan-ly/rui-ro";
     }

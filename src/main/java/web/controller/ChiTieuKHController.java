@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +29,13 @@ import web.model.TaiKhoan;
 public class ChiTieuKHController {
 	private RestTemplate rest = new RestTemplate();
 
+	@Autowired
+	private Environment env;
+
 	@GetMapping
 	public String getAll(Model model, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		String url = "http://htttqlt5-server.herokuapp.com/spend-customer/all/"+thanhVien.getId();
+		String url = env.getProperty("web.server.url") + "/spend-customer/all/"+thanhVien.getId();
 		List<ChiTieuKH> chitieus = Arrays.asList(rest.getForObject(url, ChiTieuKH[].class));
 		model.addAttribute("list", chitieus);
 		return "khach-hang/chi-tieu/list.html";
@@ -39,7 +43,7 @@ public class ChiTieuKHController {
 
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") int id,Model model) {
-		String url = "http://htttqlt5-server.herokuapp.com/spend-customer/" + id;
+		String url = env.getProperty("web.server.url") + "/spend-customer/" + id;
 		ChiTieuKH chitieu = rest.getForObject(url, ChiTieuKH.class);
 		model.addAttribute("model", chitieu);
 		return "khach-hang/chi-tieu/edit";
@@ -55,8 +59,8 @@ public class ChiTieuKHController {
 	@PostMapping("/add")
 	public String save(ChiTieuKH chitieukh, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		String url = "http://htttqlt5-server.herokuapp.com/spend-customer";
-		TaiKhoan tk = rest.getForObject("http://htttqlt5-server.herokuapp.com/account/" + thanhVien.getId(), TaiKhoan.class);
+		String url = env.getProperty("web.server.url") + "/spend-customer";
+		TaiKhoan tk = rest.getForObject(env.getProperty("web.server.url") + "/account/" + thanhVien.getId(), TaiKhoan.class);
 		chitieukh.setTk(tk);
 		rest.postForObject(url, chitieukh, Void.class);
 		return "redirect:/khach-hang/chi-tieu";

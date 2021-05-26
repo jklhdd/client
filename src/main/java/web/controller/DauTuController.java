@@ -2,6 +2,7 @@ package web.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +26,12 @@ import web.model.DauTu;
 public class DauTuController {
 	private RestTemplate rest = new RestTemplate();
 
+    @Autowired
+    private Environment env;
+
     @GetMapping
     public String getAll(Model model){
-        String url = "http://htttqlt5-server.herokuapp.com/invest";
+        String url = env.getProperty("web.server.url") + "/invest";
         List<DauTu> dauTus = Arrays.asList(rest.getForObject(url, DauTu[].class));
         model.addAttribute("list", dauTus);
         return "quan-ly/dau-tu/list.html";
@@ -41,14 +45,14 @@ public class DauTuController {
     }
     @PostMapping("/add")
     public String save(DauTu dt){
-        String url = "http://htttqlt5-server.herokuapp.com/invest";   
+        String url = env.getProperty("web.server.url") + "/invest";   
         rest.postForObject(url, dt, DauTu.class);
 		return "redirect:/quan-ly/dau-tu";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") int id, Model model){
-        String url = "http://htttqlt5-server.herokuapp.com/invest/" + id;
+        String url = env.getProperty("web.server.url") + "/invest/" + id;
         DauTu dauTu = rest.getForObject(url, DauTu.class);
         model.addAttribute("model", dauTu);
         return "quan-ly/dau-tu/edit";
@@ -57,7 +61,7 @@ public class DauTuController {
 
     @PutMapping("/edit/{id}")
     public String update(DauTu dt,@PathVariable("id") int id) {
-        String url = "http://htttqlt5-server.herokuapp.com/invest/" + id;
+        String url = env.getProperty("web.server.url") + "/invest/" + id;
         rest.put(url, dt);
 		return "redirect:/quan-ly/dau-tu";
     }

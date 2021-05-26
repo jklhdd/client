@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,9 @@ import web.dto.ThanhVien;
 public class HomeController {
 	private RestTemplate rest = new RestTemplate();
 
+	@Autowired
+	private Environment env;
+
 	@GetMapping(value = {"","/login"})
 	public String home(Model model, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
@@ -38,7 +43,7 @@ public class HomeController {
 	@PostMapping("/login")
 	public String login(@RequestParam("taikhoan") String tk, @RequestParam("matkhau") String mk,
 			HttpServletRequest request, Model model) {
-		String url = "http://htttqlt5-server.herokuapp.com/account/login/" + tk + "/" + mk;
+		String url = env.getProperty("web.server.url") + "/account/login/" + tk + "/" + mk;
 		ThanhVien thanhVien = rest.getForObject(url, ThanhVien.class);
 		if (thanhVien == null) {
 			model.addAttribute("model", thanhVien);
@@ -63,7 +68,7 @@ public class HomeController {
 			model.addAttribute("model", tv);
 			return "register";
 		}
-		String url = "http://htttqlt5-server.herokuapp.com/account/create/" + mk;
+		String url = env.getProperty("web.server.url") + "/account/create/" + mk;
 		rest.postForObject(url, tv, String.class);
 		return "redirect:/";
 	}

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,9 +27,12 @@ import web.model.TaiKhoan;
 public class GiaoDichController {
 	private RestTemplate rest = new RestTemplate();
 
+    @Autowired
+    private Environment env;
+
     @GetMapping
     public String getAll(Model model){
-        String url = "http://htttqlt5-server.herokuapp.com/account/customer";
+        String url = env.getProperty("web.server.url") + "/account/customer";
         List<ThanhVien> thanhViens = Arrays.asList(rest.getForObject(url, ThanhVien[].class));
         model.addAttribute("list", thanhViens);
         return "quan-ly/giao-dich/list";
@@ -36,7 +40,7 @@ public class GiaoDichController {
 
     @GetMapping("/edit/{customer}")
     public String getCustomerHistory(@PathVariable("customer") int id,Model model){
-        String url = "http://htttqlt5-server.herokuapp.com/giaodich/"+id;
+        String url = env.getProperty("web.server.url") + "/giaodich/"+id;
         List<GiaoDich> giaoDichs = Arrays.asList(rest.getForObject(url, GiaoDich[].class));
         model.addAttribute("list", giaoDichs);
         model.addAttribute("tk", giaoDichs.get(0).getTk());
@@ -52,8 +56,8 @@ public class GiaoDichController {
     @PostMapping("/add")
     public String save(GiaoDich giaoDich, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		TaiKhoan tk = rest.getForObject("http://htttqlt5-server.herokuapp.com/account/" + thanhVien.getId(), TaiKhoan.class);
-        String url = "http://htttqlt5-server.herokuapp.com/giaodich";   
+		TaiKhoan tk = rest.getForObject(env.getProperty("web.server.url") + "/account/" + thanhVien.getId(), TaiKhoan.class);
+        String url = env.getProperty("web.server.url") + "/giaodich";   
         giaoDich.setTk(tk);
         rest.postForObject(url, giaoDich, Void.class);
         return "redirect:/quan-ly/giao-dich";

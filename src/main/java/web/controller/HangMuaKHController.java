@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -37,9 +38,12 @@ import web.model.HangMua;
 public class HangMuaKHController {
 	private RestTemplate rest = new RestTemplate();
 
+	@Autowired
+	private Environment env;
+
 	@GetMapping
 	public String getAll(@ModelAttribute("msg") String msg, Model model) {
-		String url = "http://htttqlt5-server.herokuapp.com/product";
+		String url = env.getProperty("web.server.url") + "/product";
 		List<HangMua> chitieus = Arrays.asList(rest.getForObject(url, HangMua[].class));
 		model.addAttribute("list", chitieus);
 		model.addAttribute("msg", msg);
@@ -50,7 +54,7 @@ public class HangMuaKHController {
 	public String buyItem(@PathVariable("hang_id") int hang_id,
 			RedirectAttributes redirectAttributes,HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		String url = "http://htttqlt5-server.herokuapp.com/product/buy/" + thanhVien.getId() + "-" + hang_id;
+		String url = env.getProperty("web.server.url") + "/product/buy/" + thanhVien.getId() + "-" + hang_id;
 		String msg = rest.getForObject(url, String.class);
 		redirectAttributes.addFlashAttribute("msg", msg);
 		return "redirect:/khach-hang/hang-mua";
@@ -65,7 +69,7 @@ public class HangMuaKHController {
 
 	@PostMapping("/add")
 	public String save(HangMua hangMua, RedirectAttributes redirectAttributes) {
-		String url = "http://htttqlt5-server.herokuapp.com/spend";
+		String url = env.getProperty("web.server.url") + "/spend";
 		String msg = rest.postForObject(url, hangMua, String.class);
 		redirectAttributes.addFlashAttribute("msg", msg);
 		return "redirect:/khach-hang/hang-mua";

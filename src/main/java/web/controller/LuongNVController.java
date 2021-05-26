@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,18 +28,21 @@ import web.model.Luong;
 public class LuongNVController {
 	private RestTemplate rest = new RestTemplate();
 
+	@Autowired
+	private Environment env;
+
 	@ModelAttribute
 	public void addService(Model model, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
 		List<ThanhVien> thanhViens = Arrays
-				.asList(rest.getForObject("http://htttqlt5-server.herokuapp.com/account/staff", ThanhVien[].class));
+				.asList(rest.getForObject(env.getProperty("web.server.url") + "/account/staff", ThanhVien[].class));
 		model.addAttribute("listStaff", thanhViens);
 	}
 
 	@GetMapping
 	public String getAll(Model model, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		String url = "http://htttqlt5-server.herokuapp.com/salary/staff/" + thanhVien.getId();
+		String url = env.getProperty("web.server.url") + "/salary/staff/" + thanhVien.getId();
 		Luong luong = null;
 		try {
 			luong = rest.getForObject(url, Luong.class);
@@ -54,7 +58,7 @@ public class LuongNVController {
 
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") int id, Model model) {
-		String url = "http://htttqlt5-server.herokuapp.com/salary/" + id;
+		String url = env.getProperty("web.server.url") + "/salary/" + id;
 		Luong luong = rest.getForObject(url, Luong.class);
 		model.addAttribute("model", luong);
 		return "nhan-vien/luong/edit";
@@ -69,14 +73,14 @@ public class LuongNVController {
 
 	@PostMapping("/add")
 	public String save(Luong luong) {
-		String url = "http://htttqlt5-server.herokuapp.com/salary";
+		String url = env.getProperty("web.server.url") + "/salary";
 		rest.postForObject(url, luong, Void.class);
 		return "redirect:/nhan-vien/luong";
 	}
 
 	@PutMapping("/edit/{id}")
 	public String update(Luong luong, @PathVariable("id") int id) {
-		String url = "http://htttqlt5-server.herokuapp.com/salary/" + id;
+		String url = env.getProperty("web.server.url") + "/salary/" + id;
 		rest.put(url, luong);
 		return "redirect:/nhan-vien/luong";
 	}

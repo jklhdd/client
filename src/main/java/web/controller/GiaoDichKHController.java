@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,10 +27,13 @@ import web.model.TaiKhoan;
 public class GiaoDichKHController {
 	private RestTemplate rest = new RestTemplate();
 
+    @Autowired
+    private Environment env;
+    
     @GetMapping
     public String getAll(Model model, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-        String url = "http://htttqlt5-server.herokuapp.com/giaodich/"+thanhVien.getId();
+        String url = env.getProperty("web.server.url") + "/giaodich/"+thanhVien.getId();
         List<GiaoDich> giaoDichs = Arrays.asList(rest.getForObject(url, GiaoDich[].class));
         model.addAttribute("list", giaoDichs);
         return "khach-hang/giao-dich/list";
@@ -37,7 +41,7 @@ public class GiaoDichKHController {
 
     @GetMapping("/{customer}")
     public String getCustomerHistory(@PathVariable("customer") int id,Model model){
-        String url = "http://htttqlt5-server.herokuapp.com/giaodich";
+        String url = env.getProperty("web.server.url") + "/giaodich";
         List<GiaoDich> giaoDichs = Arrays.asList(rest.getForObject(url, GiaoDich[].class));
         model.addAttribute("list", giaoDichs);
         return "khach-hang/giao-dich/list";
@@ -51,7 +55,7 @@ public class GiaoDichKHController {
     }
     @GetMapping("/edit/{id}")
     public String edit(Model model,@PathVariable("id") int id){
-        String url = "http://htttqlt5-server.herokuapp.com/giaodich/"+ id;
+        String url = env.getProperty("web.server.url") + "/giaodich/"+ id;
         GiaoDich giaoDich = rest.getForObject(url, GiaoDich.class);
         model.addAttribute("model", giaoDich);
         return "khach-hang/giao-dich/edit";
@@ -59,8 +63,8 @@ public class GiaoDichKHController {
     @PostMapping("/add")
     public String save(GiaoDich giaoDich, HttpSession session) {
 		ThanhVien thanhVien = (ThanhVien) session.getAttribute("account");
-		TaiKhoan tk = rest.getForObject("http://htttqlt5-server.herokuapp.com/account/" + thanhVien.getId(), TaiKhoan.class);
-        String url = "http://htttqlt5-server.herokuapp.com/giaodich";   
+		TaiKhoan tk = rest.getForObject(env.getProperty("web.server.url") + "/account/" + thanhVien.getId(), TaiKhoan.class);
+        String url = env.getProperty("web.server.url") + "/giaodich";   
         giaoDich.setTk(tk);
         rest.postForObject(url, giaoDich, Void.class);
         return "redirect:/khach-hang/giao-dich";
