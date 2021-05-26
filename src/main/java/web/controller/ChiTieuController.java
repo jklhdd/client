@@ -48,6 +48,7 @@ public class ChiTieuController {
 		String url = env.getProperty("web.server.url") + "/spend";
 		List<ChiTieu> chitieus = Arrays.asList(rest.getForObject(url, ChiTieu[].class));
 		model.addAttribute("list", chitieus);
+		
 		return "quan-ly/chi-tieu/list";
 	}
 
