@@ -79,7 +79,11 @@ public class SoTietKiemController {
 	@GetMapping("/approve/{id}")
 	public String update(@PathVariable("id") int id) {
 		String url = env.getProperty("web.server.url") + "/saving/approve/" + id;
-		rest.put(url, Void.class);
+		try {
+			rest.put(url, Void.class);
+		} catch(Exception ex) {
+			
+		}
 		return "redirect:/nhan-vien-giao-dich/so-tiet-kiem";
 	}
 
