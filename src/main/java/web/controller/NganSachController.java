@@ -68,7 +68,8 @@ public class NganSachController {
 
     @PostMapping("/add")
     public String save(NganSach ns){
-        String url = env.getProperty("web.server.url") + "/	budget";   
+        String url = env.getProperty("web.server.url") + "/	budget";
+	ns.setSoDu(ns.getTienGoc());
         rest.postForObject(url, ns, Void.class);
         return "redirect:/quan-ly/ngan-sach";
     }
