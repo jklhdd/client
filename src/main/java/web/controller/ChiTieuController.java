@@ -49,7 +49,7 @@ public class ChiTieuController {
 		List<ChiTieu> chitieus = Arrays.asList(rest.getForObject(url, ChiTieu[].class));
 		model.addAttribute("list", chitieus);
 		
-		return "quan-ly/chi-tieu/list";
+		return "quan-ly/chi-tieu/list"; 
 	}
 
 	@GetMapping("/edit/{id}")
