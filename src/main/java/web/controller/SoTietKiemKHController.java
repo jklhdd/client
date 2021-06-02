@@ -62,7 +62,7 @@ public class SoTietKiemKHController {
 	@GetMapping("/edit/{id}")
 	public String getById(@PathVariable("id") int id, Model model) {
 		String url = env.getProperty("web.server.url") + "/saving/detail/" + id; 
-		SoTietKiem soTietKiem = rest.getForObject(url, SoTietKiem.class);
+		SoTietKiem soTietKiem = rest.getForObject(url, SoTietKiem.class); 
 		model.addAttribute("model", soTietKiem);
 		return "khach-hang/so-tiet-kiem/edit.html";
 	}
